@@ -6,13 +6,13 @@
 title: Hexo
 subtitle:
 description:
-author: John Doe
+author: ForNever
 language:
 timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: https://tomsbee8.github.io/
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -65,7 +65,8 @@ pagination_dir: page
 ## Themes: https://hexo.io/themes/
 theme: landscape
 
-# Deployment  --https://github.com/tomsbee8/tomsbee8.github.io.git--
+# Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 type: git
 deploy: https://github.com/tomsbee8/tomsbee8.github.io.git
+branch: master
