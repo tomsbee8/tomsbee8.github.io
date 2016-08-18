@@ -65,7 +65,7 @@ pagination_dir: page
 ## Themes: https://hexo.io/themes/
 theme: landscape
 
-# Deployment
+# Deployment  --https://github.com/tomsbee8/tomsbee8.github.io.git--
 ## Docs: https://hexo.io/docs/deployment.html
 type: git
-deploy: https://github.com/tomsbee8/tomsbee8.github.io.git
+deploy: git@github.com:tomsbee8/tomsbee8.github.io.git
