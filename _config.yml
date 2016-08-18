@@ -69,4 +69,3 @@ theme: landscape
 ## Docs: https://hexo.io/docs/deployment.html
 type: git
 deploy: https://github.com/tomsbee8/tomsbee8.github.io.git
-branch: master
