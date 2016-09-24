@@ -84,16 +84,19 @@
 
 
 
-<meta name="description" content="内存优化">
+<meta name="description" content="二.内存优化内存是Android设备中非常宝贵的资源，通常被认为比CPU宝贵的多，Android是多进程后台多任务的，当后台有太多进程的时候，内存的优化显得很重要。
+Android系统级内存管理机制其实类似于Java的垃圾回收机制，Linux在进程停止后就结束该进程，而Android把这些停止的进程都保留在内存中，直到系统需要更多内存时才选择性的释放一些，保留在内存中的进程默认（不包含后台serv">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android性能优化(二)">
-<meta property="og:url" content="https://tomsbee8.github.io/2016/09/16/Android性能优化(二)/index.html">
+<meta property="og:title" content="Android性能优化(内存优化)">
+<meta property="og:url" content="https://tomsbee8.github.io/2016/09/25/Android性能优化(内存优化)/index.html">
 <meta property="og:site_name" content="TomsBee8's Blog">
-<meta property="og:description" content="内存优化">
-<meta property="og:updated_time" content="2016-09-16T14:10:00.705Z">
+<meta property="og:description" content="二.内存优化内存是Android设备中非常宝贵的资源，通常被认为比CPU宝贵的多，Android是多进程后台多任务的，当后台有太多进程的时候，内存的优化显得很重要。
+Android系统级内存管理机制其实类似于Java的垃圾回收机制，Linux在进程停止后就结束该进程，而Android把这些停止的进程都保留在内存中，直到系统需要更多内存时才选择性的释放一些，保留在内存中的进程默认（不包含后台serv">
+<meta property="og:updated_time" content="2016-09-24T16:07:30.332Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android性能优化(二)">
-<meta name="twitter:description" content="内存优化">
+<meta name="twitter:title" content="Android性能优化(内存优化)">
+<meta name="twitter:description" content="二.内存优化内存是Android设备中非常宝贵的资源，通常被认为比CPU宝贵的多，Android是多进程后台多任务的，当后台有太多进程的时候，内存的优化显得很重要。
+Android系统级内存管理机制其实类似于Java的垃圾回收机制，Linux在进程停止后就结束该进程，而Android把这些停止的进程都保留在内存中，直到系统需要更多内存时才选择性的释放一些，保留在内存中的进程默认（不包含后台serv">
 
 
 
@@ -114,9 +117,9 @@
 
 
 
-  <link rel="canonical" href="https://tomsbee8.github.io/2016/09/16/Android性能优化(二)/"/>
+  <link rel="canonical" href="https://tomsbee8.github.io/2016/09/25/Android性能优化(内存优化)/"/>
 
-  <title> Android性能优化(二) | TomsBee8's Blog </title>
+  <title> Android性能优化(内存优化) | TomsBee8's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -279,7 +282,7 @@
             
             
               
-                Android性能优化(二)
+                Android性能优化(内存优化)
               
             
           </h1>
@@ -291,8 +294,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-16T15:26:21+08:00" content="2016-09-16">
-              2016-09-16
+            <time itemprop="dateCreated" datetime="2016-09-25T15:26:20+08:00" content="2016-09-25">
+              2016-09-25
             </time>
           </span>
 
@@ -321,8 +324,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/09/16/Android性能优化(二)/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/16/Android性能优化(二)/" itemprop="commentsCount"></span>
+                <a href="/2016/09/25/Android性能优化(内存优化)/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/25/Android性能优化(内存优化)/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -332,7 +335,7 @@
 
           
           
-             <span id="/2016/09/16/Android性能优化(二)/" class="leancloud_visitors" data-flag-title="Android性能优化(二)">
+             <span id="/2016/09/25/Android性能优化(内存优化)/" class="leancloud_visitors" data-flag-title="Android性能优化(内存优化)">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -354,7 +357,54 @@
       
 
       
-        <p>内存优化</p>
+        <h4 id="二-内存优化"><a href="#二-内存优化" class="headerlink" title="二.内存优化"></a>二.内存优化</h4><p>内存是Android设备中非常宝贵的资源，通常被认为比CPU宝贵的多，Android是多进程后台多任务的，当后台有太多进程的时候，内存的优化显得很重要。</p>
+<p>Android系统级内存管理机制其实类似于Java的垃圾回收机制，Linux在进程停止后就结束该进程，而Android把这些停止的进程都保留在内存中，直到系统需要更多内存时才选择性的释放一些，保留在内存中的进程默认（不包含后台service与Thread等单独UI线程的进程）不会影响整体系统的性能（速度与电量等）且当再次启动这些保留在内存的进程时可以明显提高启动速度，不需要再去加载。在Android系统中框架会给进程设置优先级，而且优先级会随着内存使用情况和用户的操作和不断变化，在系统内存达到规定的不同阀值时消灭不同优先级的进程。</p>
+<p><strong>Android的GC机制</strong>：</p>
+<ol>
+<li>Android里面有一个三级Generation的内存模型，最近分配的对象会存放在Young Generation区域，当这个对象在这个区域停留的时间达到一定程度，它会被移动到Old Generation，最后到Permanent Generation区域。</li>
+<li>执行GC操作的时候，任何线程的任何操作都会需要暂停，等待GC操作完成之后，其他操作才能够继续运行。</li>
+<li>Android系统里面有一个Generational Heap Memory的模型，系统会根据内存中不同的内存数据类型分别执行不同的GC操作。例如，最近刚分配的对象会放在Young Generation区域，这个区域的对象通常都是会快速被创建并且很快被销毁回收的，同时这个区域的GC操作速度也是比Old Generation区域的GC操作速度更快的。</li>
+</ol>
+<p><strong>内存泄露</strong>：内存泄漏是指分配出去的内存无法回收了</p>
+<p><strong>内存溢出</strong>：程序要求的内存，超出了系统所能分配的范围，从而发生溢出</p>
+<p><strong>通过工具定位分析问题：</strong></p>
+<ol>
+<li>Memory Monitor：查看整个app所占用的内存，以及发生GC的时刻，短时间内发生大量的GC操作是一个危险的信号。</li>
+<li>Allocation Tracker：使用此工具来追踪内存的分配，追踪内存对象的来源。</li>
+<li>Heap Viewer：查看当前内存快照，便于对比分析哪些对象有可能是泄漏了的。</li>
+<li>接入<a href="https://github.com/square/leakcanary" target="_blank" rel="external">LeakCanary</a>分析内存泄露</li>
+<li>使用Lint选项检查可能的代码隐患</li>
+</ol>
+<p><strong>通过代码进行优化</strong></p>
+<ul>
+<li>Service的方法是在UI线程执行的，考虑使用 IntentService，AsyncTask，Executors，Handler 和 Loopers(Looper.myLooper() == Looper.getMainLooper() 是可以帮助你确定你是否在主线程的代码)。</li>
+<li>对大图片，先获取图片的大小信息，根据实际需要展示大小计算inSampleSize，最后decode；</li>
+<li>在合适的条件下使用SparseArray替换HashMap</li>
+<li>在拼接字符串的时候，使用StringBuilder或者StringBuffer代替String</li>
+<li>对于I/O需要频繁操作的，主要是和外部存储相关的I/O操作，MemoryFile通过将 NAND或SD卡上的文件，分段映射到内存中进行修改处理，这样就用高速的RAM代替了ROM或SD卡，性能自然提高不少</li>
+<li>android.text.format包下的Formatter类，提供了IP地址转换、文件大小转换等方法；DateFormat类，提供了各种时间转换，都是非常高效的方法。</li>
+<li>使用 System.arraycopy()代替 for 循环复制。</li>
+<li>利用系统自带的资源（如string，style，color）</li>
+<li>View中设置缓存属性.setDrawingCache为true</li>
+<li>虽然枚举类型的可读性较好，避免使用枚举，使用注解和static final代替，例如：</li>
+</ul>
+<pre><code>public class Colors {
+        @IntDef({RED, GREEN, YELLOW})
+        @Retention(RetentionPolicy.SOURCE)
+        public @interface LightColors{}
+
+        public static final int RED = 0;
+        public static final int GREEN = 1;
+        public static final int YELLOW = 2;
+    }
+</code></pre><ul>
+<li>大量使用反射会影响性能，适当少的使用反射原理的第三方库 。</li>
+<li>在慎用异常,异常对性能不利，抛出异常首先要创建一个新的对象。Throwable 接口的构造函数用名为fillInStackTrace() 的本地方法,fillInStackTrace() 方法检查栈,收集调用跟踪信息。只要有异常被抛出,VM 就必要调整调用栈,因为在处理过程中创建了一个新对象。</li>
+<li>使用高性能的第三方图片缓存库，如Glide,Picasco等</li>
+<li>尽量使用线程池替代多线程操作，这样可以节约内存及CPU占用率。</li>
+<li>需要使用ContentProvider对多行数据进行更新、插入、删除数据操作的时候，使用ContentProviderOperation工具类进行批量操作，</li>
+<li>使用ProGuard来剔除不需要的代码 ，减少冗余，避免类加载时浪费内存。 </li>
+</ul>
 
       
     </div>
@@ -388,12 +438,16 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/09/25/Android性能优化(视图优化)/" rel="next" title="Android性能优化(视图优化)">
+                <i class="fa fa-chevron-left"></i> Android性能优化(视图优化)
+              </a>
+            
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/09/16/Android性能优化(一)/" rel="prev" title="Android性能优化(一)">
-                Android性能优化(一) <i class="fa fa-chevron-right"></i>
+              <a href="/2016/09/25/Android性能优化(电量优化) /" rel="prev" title="Android性能优化(电量优化)">
+                Android性能优化(电量优化) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -409,10 +463,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2016/09/16/Android性能优化(二)/"
-     data-title="Android性能优化(二)"
+        <div class="ds-share flat" data-thread-key="2016/09/25/Android性能优化(内存优化)/"
+     data-title="Android性能优化(内存优化)"
      data-content=""
-     data-url="https://tomsbee8.github.io/2016/09/16/Android性能优化(二)/">
+     data-url="https://tomsbee8.github.io/2016/09/25/Android性能优化(内存优化)/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -442,8 +496,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/09/16/Android性能优化(二)/"
-           data-title="Android性能优化(二)" data-url="https://tomsbee8.github.io/2016/09/16/Android性能优化(二)/">
+      <div class="ds-thread" data-thread-key="2016/09/25/Android性能优化(内存优化)/"
+           data-title="Android性能优化(内存优化)" data-url="https://tomsbee8.github.io/2016/09/25/Android性能优化(内存优化)/">
       </div>
     
   </div>
@@ -488,7 +542,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-count">3</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -505,7 +559,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -574,7 +628,7 @@
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#二-内存优化"><span class="nav-number">1.</span> <span class="nav-text">二.内存优化</span></a></li></ol></div>
             
           </div>
         </section>
