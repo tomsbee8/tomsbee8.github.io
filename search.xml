@@ -5,7 +5,7 @@
     
     <entry>
       <title><![CDATA[Android性能优化(电量优化)]]></title>
-      <url>https://tomsbee8.github.io/2016/09/25/Android%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96(%E7%94%B5%E9%87%8F%E4%BC%98%E5%8C%96)%20/</url>
+      <url>https://tomsbee8.github.io/2016/09/25/Android%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96(%E7%94%B5%E9%87%8F%E4%BC%98%E5%8C%96)/</url>
       <content type="html"><![CDATA[<h4 id="二-电量优化"><a href="#二-电量优化" class="headerlink" title="二.电量优化"></a>二.电量优化</h4><p>手机各个硬件模块的耗电量是不一样的，有些模块非常耗电，而有些模块则相对显得耗电量小很多。</p>
 <p>android应用的耗电主要在以下三个方面：</p>
 <ol>
