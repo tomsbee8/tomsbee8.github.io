@@ -92,7 +92,7 @@ Android系统级内存管理机制其实类似于Java的垃圾回收机制，Lin
 <meta property="og:site_name" content="TomsBee8's Blog">
 <meta property="og:description" content="二.内存优化内存是Android设备中非常宝贵的资源，通常被认为比CPU宝贵的多，Android是多进程后台多任务的，当后台有太多进程的时候，内存的优化显得很重要。
 Android系统级内存管理机制其实类似于Java的垃圾回收机制，Linux在进程停止后就结束该进程，而Android把这些停止的进程都保留在内存中，直到系统需要更多内存时才选择性的释放一些，保留在内存中的进程默认（不包含后台serv">
-<meta property="og:updated_time" content="2016-09-24T16:07:30.332Z">
+<meta property="og:updated_time" content="2016-10-03T12:53:01.172Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android性能优化(内存优化)">
 <meta name="twitter:description" content="二.内存优化内存是Android设备中非常宝贵的资源，通常被认为比CPU宝贵的多，Android是多进程后台多任务的，当后台有太多进程的时候，内存的优化显得很重要。
@@ -361,7 +361,7 @@ Android系统级内存管理机制其实类似于Java的垃圾回收机制，Lin
 <p>Android系统级内存管理机制其实类似于Java的垃圾回收机制，Linux在进程停止后就结束该进程，而Android把这些停止的进程都保留在内存中，直到系统需要更多内存时才选择性的释放一些，保留在内存中的进程默认（不包含后台service与Thread等单独UI线程的进程）不会影响整体系统的性能（速度与电量等）且当再次启动这些保留在内存的进程时可以明显提高启动速度，不需要再去加载。在Android系统中框架会给进程设置优先级，而且优先级会随着内存使用情况和用户的操作和不断变化，在系统内存达到规定的不同阀值时消灭不同优先级的进程。</p>
 <p><strong>Android的GC机制</strong>：</p>
 <ol>
-<li>Android里面有一个三级Generation的内存模型，最近分配的对象会存放在Young Generation区域，当这个对象在这个区域停留的时间达到一定程度，它会被移动到Old Generation，最后到Permanent Generation区域。</li>
+<li>Android里面有一个三级Generation的内存模型，最近分配的对象会存放在Young Generation区域，当这个对象在这个区域停留的时间达到一定程度，它会被移动到Old Generation，最后到Permanent Generation区域。 <a id="more"></a></li>
 <li>执行GC操作的时候，任何线程的任何操作都会需要暂停，等待GC操作完成之后，其他操作才能够继续运行。</li>
 <li>Android系统里面有一个Generational Heap Memory的模型，系统会根据内存中不同的内存数据类型分别执行不同的GC操作。例如，最近刚分配的对象会放在Young Generation区域，这个区域的对象通常都是会快速被创建并且很快被销毁回收的，同时这个区域的GC操作速度也是比Old Generation区域的GC操作速度更快的。</li>
 </ol>
@@ -542,7 +542,7 @@ Android系统级内存管理机制其实类似于Java的垃圾回收机制，Lin
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-count">4</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -559,7 +559,7 @@ Android系统级内存管理机制其实类似于Java的垃圾回收机制，Lin
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

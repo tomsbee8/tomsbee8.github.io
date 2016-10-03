@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="启动," />
 
 
 
@@ -84,12 +84,19 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="TomsBee8's Blog">
-<meta property="og:url" content="https://tomsbee8.github.io/archives/2016/09/index.html">
+<meta name="description" content="我在最初接触开发Android的时候，一直对启动页没有太多关注，大多数时候我们接触的App的启动页都是，一张图片（或多或少的会多一些其他的组件，比如“倒计时”，“跳过”啥的），启动页一般都会放置一个占位符，它存在的目的就是为了让用户在等待的过程中忽略这个开启的过程，其实也就是大家所说的提高了用户体验度，降低用户焦虑感。
+app的启动方式： 1.冷启动当启动应用时，后台没有该应用的进程，这时系统会重">
+<meta property="og:type" content="article">
+<meta property="og:title" content="App启动页性能优化">
+<meta property="og:url" content="https://tomsbee8.github.io/2016/10/03/App启动页性能优化/index.html">
 <meta property="og:site_name" content="TomsBee8's Blog">
+<meta property="og:description" content="我在最初接触开发Android的时候，一直对启动页没有太多关注，大多数时候我们接触的App的启动页都是，一张图片（或多或少的会多一些其他的组件，比如“倒计时”，“跳过”啥的），启动页一般都会放置一个占位符，它存在的目的就是为了让用户在等待的过程中忽略这个开启的过程，其实也就是大家所说的提高了用户体验度，降低用户焦虑感。
+app的启动方式： 1.冷启动当启动应用时，后台没有该应用的进程，这时系统会重">
+<meta property="og:updated_time" content="2016-10-03T16:14:33.108Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="TomsBee8's Blog">
+<meta name="twitter:title" content="App启动页性能优化">
+<meta name="twitter:description" content="我在最初接触开发Android的时候，一直对启动页没有太多关注，大多数时候我们接触的App的启动页都是，一张图片（或多或少的会多一些其他的组件，比如“倒计时”，“跳过”啥的），启动页一般都会放置一个占位符，它存在的目的就是为了让用户在等待的过程中忽略这个开启的过程，其实也就是大家所说的提高了用户体验度，降低用户焦虑感。
+app的启动方式： 1.冷启动当启动应用时，后台没有该应用的进程，这时系统会重">
 
 
 
@@ -110,9 +117,9 @@
 
 
 
-  <link rel="canonical" href="https://tomsbee8.github.io/archives/2016/09/"/>
+  <link rel="canonical" href="https://tomsbee8.github.io/2016/10/03/App启动页性能优化/"/>
 
-  <title> 归档 | TomsBee8's Blog </title>
+  <title> App启动页性能优化 | TomsBee8's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -133,7 +140,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left  page-archive  ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -254,147 +261,245 @@
           <div id="content" class="content">
             
 
-  <section id="posts" class="posts-collapse">
-    <span class="archive-move-on"></span>
-
-    <span class="archive-page-counter">
-      
-      
-      
-        
-      
-      嗯..! 目前共计 4 篇日志。 继续努力。
-    </span>
-
+  <div id="posts" class="posts-expand">
     
-
-      
-      
-      
-
-      
-        
-        <div class="collection-title">
-          <h2 class="archive-year motion-element" id="archive-year-2016">2016</h2>
-        </div>
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2016/09/25/Android性能优化(电量优化)/" itemprop="url">
-              
-                <span itemprop="name">Android性能优化(电量优化)</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-09-25T15:26:21+08:00"
-              content="2016-09-25" >
-          09-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2016/09/25/Android性能优化(内存优化)/" itemprop="url">
-              
-                <span itemprop="name">Android性能优化(内存优化)</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-09-25T15:26:20+08:00"
-              content="2016-09-25" >
-          09-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2016/09/25/Android性能优化(视图优化)/" itemprop="url">
-              
-                <span itemprop="name">Android性能优化(视图优化)</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-09-25T15:26:19+08:00"
-              content="2016-09-25" >
-          09-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-  </section>
 
   
+  
 
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                App启动页性能优化
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-03T22:38:13+08:00" content="2016-10-03">
+              2016-10-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/03/App启动页性能优化/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/03/App启动页性能优化/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/10/03/App启动页性能优化/" class="leancloud_visitors" data-flag-title="App启动页性能优化">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>我在最初接触开发Android的时候，一直对启动页没有太多关注，大多数时候我们接触的App的启动页都是，一张图片（或多或少的会多一些其他的组件，比如“倒计时”，“跳过”啥的），启动页一般都会放置一个占位符，它存在的目的就是为了让用户在等待的过程中忽略这个开启的过程，其实也就是大家所说的提高了用户体验度，降低用户焦虑感。</p>
+<p>app的启动方式：<br> 1.冷启动<br>当启动应用时，后台没有该应用的进程，这时系统会重新创建一个新的进程分配给该应用，这个启动方式就是冷启动。冷启动因为系统会重新创建一个新的进程分配给它，所以会先创建和初始化Application类，再创建和初始化MainActivity类（包括一系列的测量、布局、绘制），最后显示在界面上。 </p>
+<p>app的冷启动流程：</p>
+<pre><code>Application的构造器方法——&gt;attachBaseContext()——&gt;onCreate()——&gt;Activity的构造方法——&gt;onCreate()——&gt;配置主题中背景等属性——&gt;onStart()——&gt;onResume()——&gt;测量布局绘制显示在界面上 
+</code></pre><p> 2.热启动<br>当启动应用时，后台已有该应用的进程（例：按back键、home键，应用虽然会退出，但是该应用的进程是依然会保留在后台，可进入任务列表查看），所以在已有进程的情况下，这种启动会从已有的进程中来启动应用，这个方式叫热启动。热启动因为会从已有的进程中来启动，所以热启动就不会走Application这步了，而是直接走MainActivity（包括一系列的测量、布局、绘制），所以热启动的过程只需要创建和初始化一个MainActivity就行了，而不必创建和初始化Application，因为一个应用从新进程的创建到进程的销毁，Application只会初始化一次。  </p>
+<ol>
+<li>温启动：介于冷启动和热启动之间, 一般来说在以下两种情况下发生：1.用户back退出了App, 然后又启动. App进程可能还在运行, 但是activity需要重建;2.用户退出App后, 系统可能由于内存原因将App杀死, 进程和activity都需要重启, 但是可以在onCreate中将被动杀死锁保存的状态(saved instance state)恢复。</li>
+</ol>
+<p>从冷启动的流程上看，启动性能的优化主要优化Application和启动页activity(或叫闪屏页)两个方面。</p>
+<ol>
+<li>启动页的时间怎么消耗 </li>
+</ol>
+<p>一般情况下，都是设计的延迟时间（大多是2S~5S）从启动页跳转到主页面：</p>
+<pre><code>new Handler().postDelayed(new Runnable() {
+ @Override
+ public void run() {
+     startActivity(new Intent(StartActivity.this,MainActivity.class));
+   }
+ }, 3000);
+</code></pre><p>消耗时间主要会用在application的初始化和闪屏activity的生命周期。<br>大多时候，我们app 的application初始化的时候做的工作有，配置网络请求、第三方SDK的初始化、。这些操作都是很消耗时间的。<br>在闪屏activity的生命周期中我们会一些加载用户数据等，者也是需要消耗时间的</p>
+<ol>
+<li><p>启动页的背景画面设计</p>
+<ul>
+<li>主页面风格类似的界面设计</li>
+<li>视频广告或者背景图片，需要主要图片不能太大导致OOM<br>给我们的应用窗口弄一个<a href="https://material.google.com/patterns/launch-screens.html#launch-screens-branded-launch" target="_blank" rel="external">PlaceHolder</a></li>
+<li>适当的组件，不能太复杂,因为渲染需要花费时间</li>
+<li>不能出现白屏或者黑屏的情况</li>
+</ul>
+</li>
+<li><p>启动页的特效</p>
+</li>
+</ol>
+<ol>
+<li><p>返回键功能设计<br>返回键大多数时候会被屏蔽：</p>
+<pre><code> @Override
+public boolean onKeyDown(int keyCode, KeyEvent event) {
+if (keyCode == KeyEvent.KEYCODE_BACK) {
+    return true;
+}
+return super.onKeyDown(keyCode, event);
+}
+</code></pre></li>
+</ol>
+<ul>
+<li>其他需要注意的地方：<ol>
+<li>不要在application里面直接缓存数据，不要放置太多static final 的数据。因为Application会因为进入background后内存不足被系统干掉，进入后系统会重现创建一个Application类，而导致缓存在Application类里的数据全部初始化而丢失。</li>
+<li>不需要再单例application,因为application本来就是针对一个进程里所有组件唯一的。需要引用的话，直接getApplication().</li>
+<li>尽量不要在在Application中做关于文件，数据库，sharedPreference的操作，可以考虑单独线程了做这些工作</li>
+</ol>
+</li>
+</ul>
+<p>本文参考了 ：<br><a href="http://blog.csdn.net/yanzhenjie1003/article/details/52201896" title="秒开" target="_blank" rel="external">http://blog.csdn.net/yanzhenjie1003/article/details/52201896</a><br><a href="http://www.jianshu.com/p/4f10c9a10ac9" target="_blank" rel="external">http://www.jianshu.com/p/4f10c9a10ac9</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/启动/" rel="tag">#启动</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/25/Android性能优化(电量优化)/" rel="next" title="Android性能优化(电量优化)">
+                <i class="fa fa-chevron-left"></i> Android性能优化(电量优化)
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/10/03/App启动页性能优化/"
+     data-title="App启动页性能优化"
+     data-content=""
+     data-url="https://tomsbee8.github.io/2016/10/03/App启动页性能优化/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
 
 
           </div>
           
 
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
 
           
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/10/03/App启动页性能优化/"
+           data-title="App启动页性能优化" data-url="https://tomsbee8.github.io/2016/10/03/App启动页性能优化/">
+      </div>
+    
+  </div>
+
 
         </div>
         
@@ -414,8 +519,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.png"
@@ -505,6 +619,17 @@
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
       
 
     </div>
@@ -622,11 +747,9 @@
 
 
   
-  
-    <script type="text/javascript" id="motion.page.archive">
-      $('.archive-year').velocity('transition.slideLeftIn');
-    </script>
-  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
 
 
   

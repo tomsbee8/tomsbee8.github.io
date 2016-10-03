@@ -278,6 +278,186 @@
             
               
                 
+                <a class="post-title-link" href="/2016/10/03/App启动页性能优化/" itemprop="url">
+                  App启动页性能优化
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-03T22:38:13+08:00" content="2016-10-03">
+              2016-10-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/03/App启动页性能优化/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/03/App启动页性能优化/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/10/03/App启动页性能优化/" class="leancloud_visitors" data-flag-title="App启动页性能优化">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>我在最初接触开发Android的时候，一直对启动页没有太多关注，大多数时候我们接触的App的启动页都是，一张图片（或多或少的会多一些其他的组件，比如“倒计时”，“跳过”啥的），启动页一般都会放置一个占位符，它存在的目的就是为了让用户在等待的过程中忽略这个开启的过程，其实也就是大家所说的提高了用户体验度，降低用户焦虑感。</p>
+<p>app的启动方式：<br> 1.冷启动<br>当启动应用时，后台没有该应用的进程，这时系统会重新创建一个新的进程分配给该应用，这个启动方式就是冷启动。冷启动因为系统会重新创建一个新的进程分配给它，所以会先创建和初始化Application类，再创建和初始化MainActivity类（包括一系列的测量、布局、绘制），最后显示在界面上。 </p>
+<p>app的冷启动流程：</p>
+<pre><code>Application的构造器方法——&gt;attachBaseContext()——&gt;onCreate()——&gt;Activity的构造方法——&gt;onCreate()——&gt;配置主题中背景等属性——&gt;onStart()——&gt;onResume()——&gt;测量布局绘制显示在界面上 
+</code></pre><p> 2.热启动<br>当启动应用时，后台已有该应用的进程（例：按back键、home键，应用虽然会退出，但是该应用的进程是依然会保留在后台，可进入任务列表查看），所以在已有进程的情况下，这种启动会从已有的进程中来启动应用，这个方式叫热启动。热启动因为会从已有的进程中来启动，所以热启动就不会走Application这步了，而是直接走MainActivity（包括一系列的测量、布局、绘制），所以热启动的过程只需要创建和初始化一个MainActivity就行了，而不必创建和初始化Application，因为一个应用从新进程的创建到进程的销毁，Application只会初始化一次。  </p>
+<ol>
+<li>温启动：介于冷启动和热启动之间, 一般来说在以下两种情况下发生：1.用户back退出了App, 然后又启动. App进程可能还在运行, 但是activity需要重建;2.用户退出App后, 系统可能由于内存原因将App杀死, 进程和activity都需要重启, 但是可以在onCreate中将被动杀死锁保存的状态(saved instance state)恢复。</li>
+</ol>
+<p>从冷启动的流程上看，启动性能的优化主要优化Application和启动页activity(或叫闪屏页)两个方面。</p>
+<ol>
+<li>启动页的时间怎么消耗 </li>
+</ol>
+<p>一般情况下，都是设计的延迟时间（大多是2S~5S）从启动页跳转到主页面：</p>
+<pre><code>new Handler().postDelayed(new Runnable() {
+ @Override
+ public void run() {
+     startActivity(new Intent(StartActivity.this,MainActivity.class));
+   }
+ }, 3000);
+</code></pre><p>消耗时间主要会用在application的初始化和闪屏activity的生命周期。<br>大多时候，我们app 的application初始化的时候做的工作有，配置网络请求、第三方SDK的初始化、。这些操作都是很消耗时间的。<br>在闪屏activity的生命周期中我们会一些加载用户数据等，者也是需要消耗时间的</p>
+<ol>
+<li><p>启动页的背景画面设计</p>
+<ul>
+<li>主页面风格类似的界面设计</li>
+<li>视频广告或者背景图片，需要主要图片不能太大导致OOM<br>给我们的应用窗口弄一个<a href="https://material.google.com/patterns/launch-screens.html#launch-screens-branded-launch" target="_blank" rel="external">PlaceHolder</a></li>
+<li>适当的组件，不能太复杂,因为渲染需要花费时间</li>
+<li>不能出现白屏或者黑屏的情况</li>
+</ul>
+</li>
+<li><p>启动页的特效</p>
+</li>
+</ol>
+<ol>
+<li><p>返回键功能设计<br>返回键大多数时候会被屏蔽：</p>
+<pre><code> @Override
+public boolean onKeyDown(int keyCode, KeyEvent event) {
+if (keyCode == KeyEvent.KEYCODE_BACK) {
+    return true;
+}
+return super.onKeyDown(keyCode, event);
+}
+</code></pre></li>
+</ol>
+<ul>
+<li>其他需要注意的地方：<ol>
+<li>不要在application里面直接缓存数据，不要放置太多static final 的数据。因为Application会因为进入background后内存不足被系统干掉，进入后系统会重现创建一个Application类，而导致缓存在Application类里的数据全部初始化而丢失。</li>
+<li>不需要再单例application,因为application本来就是针对一个进程里所有组件唯一的。需要引用的话，直接getApplication().</li>
+<li>尽量不要在在Application中做关于文件，数据库，sharedPreference的操作，可以考虑单独线程了做这些工作</li>
+</ol>
+</li>
+</ul>
+<p>本文参考了 ：<br><a href="http://blog.csdn.net/yanzhenjie1003/article/details/52201896" title="秒开" target="_blank" rel="external">http://blog.csdn.net/yanzhenjie1003/article/details/52201896</a><br><a href="http://www.jianshu.com/p/4f10c9a10ac9" target="_blank" rel="external">http://www.jianshu.com/p/4f10c9a10ac9</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/09/25/Android性能优化(电量优化)/" itemprop="url">
                   Android性能优化(电量优化)
                 </a>
@@ -356,8 +536,7 @@
 
       
         
-          
-            <h4 id="二-电量优化"><a href="#二-电量优化" class="headerlink" title="二.电量优化"></a>二.电量优化</h4><p>手机各个硬件模块的耗电量是不一样的，有些模块非常耗电，而有些模块则相对显得耗电量小很多。</p>
+          <h4 id="二-电量优化"><a href="#二-电量优化" class="headerlink" title="二.电量优化"></a>二.电量优化</h4><p>手机各个硬件模块的耗电量是不一样的，有些模块非常耗电，而有些模块则相对显得耗电量小很多。</p>
 <p>android应用的耗电主要在以下三个方面：</p>
 <ol>
 <li>大数据量的传输。</li>
@@ -368,18 +547,12 @@
 <ol>
 <li>在需要网络连接的程序中，首先检查网络连接是否正常，如果没有网络连接，那么就不需要执行相应的程序。</li>
 <li>应该尽量减少移动网络下的数据传输，多在WiFi环境下传输数据。</li>
-<li>在移动网络下，最好做到批量执行网络请求，尽量避免频繁的间隔网络请求。</li>
-<li>使用效率高的数据格式和解析方法，推荐使用JSON和Protobuf</li>
-<li>目在进行大数据量下载时，尽量使用GZIP方式下载</li>
-<li>对定位要求不是太高的话尽量不要使用GPS定位，可能使用wifi和移动网络定位即可</li>
-<li>正确申请和释放WakeLock</li>
-<li>不要频繁唤醒手机</li>
-<li>正确使用Alarm</li>
-<li>节制地使用Service</li>
-<li>使用Job Scheduler，应用需要做的事情就是判断哪些任务是不紧急的，可以交给Job Scheduler来处理，Job Scheduler集中处理收到的任务，选择合适的时间，合适的网络，再一起进行执行。</li>
-</ol>
-
-          
+<li>在移动网络下，最好做到批量执行网络请求，尽量避免频繁的间隔网络请求。
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/09/25/Android性能优化(电量优化)/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -505,57 +678,16 @@
 
       
         
-          
-            <h4 id="二-内存优化"><a href="#二-内存优化" class="headerlink" title="二.内存优化"></a>二.内存优化</h4><p>内存是Android设备中非常宝贵的资源，通常被认为比CPU宝贵的多，Android是多进程后台多任务的，当后台有太多进程的时候，内存的优化显得很重要。</p>
+          <h4 id="二-内存优化"><a href="#二-内存优化" class="headerlink" title="二.内存优化"></a>二.内存优化</h4><p>内存是Android设备中非常宝贵的资源，通常被认为比CPU宝贵的多，Android是多进程后台多任务的，当后台有太多进程的时候，内存的优化显得很重要。</p>
 <p>Android系统级内存管理机制其实类似于Java的垃圾回收机制，Linux在进程停止后就结束该进程，而Android把这些停止的进程都保留在内存中，直到系统需要更多内存时才选择性的释放一些，保留在内存中的进程默认（不包含后台service与Thread等单独UI线程的进程）不会影响整体系统的性能（速度与电量等）且当再次启动这些保留在内存的进程时可以明显提高启动速度，不需要再去加载。在Android系统中框架会给进程设置优先级，而且优先级会随着内存使用情况和用户的操作和不断变化，在系统内存达到规定的不同阀值时消灭不同优先级的进程。</p>
 <p><strong>Android的GC机制</strong>：</p>
 <ol>
-<li>Android里面有一个三级Generation的内存模型，最近分配的对象会存放在Young Generation区域，当这个对象在这个区域停留的时间达到一定程度，它会被移动到Old Generation，最后到Permanent Generation区域。</li>
-<li>执行GC操作的时候，任何线程的任何操作都会需要暂停，等待GC操作完成之后，其他操作才能够继续运行。</li>
-<li>Android系统里面有一个Generational Heap Memory的模型，系统会根据内存中不同的内存数据类型分别执行不同的GC操作。例如，最近刚分配的对象会放在Young Generation区域，这个区域的对象通常都是会快速被创建并且很快被销毁回收的，同时这个区域的GC操作速度也是比Old Generation区域的GC操作速度更快的。</li>
-</ol>
-<p><strong>内存泄露</strong>：内存泄漏是指分配出去的内存无法回收了</p>
-<p><strong>内存溢出</strong>：程序要求的内存，超出了系统所能分配的范围，从而发生溢出</p>
-<p><strong>通过工具定位分析问题：</strong></p>
-<ol>
-<li>Memory Monitor：查看整个app所占用的内存，以及发生GC的时刻，短时间内发生大量的GC操作是一个危险的信号。</li>
-<li>Allocation Tracker：使用此工具来追踪内存的分配，追踪内存对象的来源。</li>
-<li>Heap Viewer：查看当前内存快照，便于对比分析哪些对象有可能是泄漏了的。</li>
-<li>接入<a href="https://github.com/square/leakcanary" target="_blank" rel="external">LeakCanary</a>分析内存泄露</li>
-<li>使用Lint选项检查可能的代码隐患</li>
-</ol>
-<p><strong>通过代码进行优化</strong></p>
-<ul>
-<li>Service的方法是在UI线程执行的，考虑使用 IntentService，AsyncTask，Executors，Handler 和 Loopers(Looper.myLooper() == Looper.getMainLooper() 是可以帮助你确定你是否在主线程的代码)。</li>
-<li>对大图片，先获取图片的大小信息，根据实际需要展示大小计算inSampleSize，最后decode；</li>
-<li>在合适的条件下使用SparseArray替换HashMap</li>
-<li>在拼接字符串的时候，使用StringBuilder或者StringBuffer代替String</li>
-<li>对于I/O需要频繁操作的，主要是和外部存储相关的I/O操作，MemoryFile通过将 NAND或SD卡上的文件，分段映射到内存中进行修改处理，这样就用高速的RAM代替了ROM或SD卡，性能自然提高不少</li>
-<li>android.text.format包下的Formatter类，提供了IP地址转换、文件大小转换等方法；DateFormat类，提供了各种时间转换，都是非常高效的方法。</li>
-<li>使用 System.arraycopy()代替 for 循环复制。</li>
-<li>利用系统自带的资源（如string，style，color）</li>
-<li>View中设置缓存属性.setDrawingCache为true</li>
-<li>虽然枚举类型的可读性较好，避免使用枚举，使用注解和static final代替，例如：</li>
-</ul>
-<pre><code>public class Colors {
-        @IntDef({RED, GREEN, YELLOW})
-        @Retention(RetentionPolicy.SOURCE)
-        public @interface LightColors{}
-
-        public static final int RED = 0;
-        public static final int GREEN = 1;
-        public static final int YELLOW = 2;
-    }
-</code></pre><ul>
-<li>大量使用反射会影响性能，适当少的使用反射原理的第三方库 。</li>
-<li>在慎用异常,异常对性能不利，抛出异常首先要创建一个新的对象。Throwable 接口的构造函数用名为fillInStackTrace() 的本地方法,fillInStackTrace() 方法检查栈,收集调用跟踪信息。只要有异常被抛出,VM 就必要调整调用栈,因为在处理过程中创建了一个新对象。</li>
-<li>使用高性能的第三方图片缓存库，如Glide,Picasco等</li>
-<li>尽量使用线程池替代多线程操作，这样可以节约内存及CPU占用率。</li>
-<li>需要使用ContentProvider对多行数据进行更新、插入、删除数据操作的时候，使用ContentProviderOperation工具类进行批量操作，</li>
-<li>使用ProGuard来剔除不需要的代码 ，减少冗余，避免类加载时浪费内存。 </li>
-</ul>
-
-          
+<li>Android里面有一个三级Generation的内存模型，最近分配的对象会存放在Young Generation区域，当这个对象在这个区域停留的时间达到一定程度，它会被移动到Old Generation，最后到Permanent Generation区域。
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/09/25/Android性能优化(内存优化)/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -681,44 +813,18 @@
 
       
         
-          
-            <h4 id="一-视图优化"><a href="#一-视图优化" class="headerlink" title="一.视图优化"></a>一.视图优化</h4><p>大多数手机的屏幕刷新频率是60hz，如果在1000/60=16.67ms内没有办法把这一帧的任务执行完毕，就会发生丢帧的现象。丢帧越多，用户感受到的卡顿情况就越严重。</p>
+          <h4 id="一-视图优化"><a href="#一-视图优化" class="headerlink" title="一.视图优化"></a>一.视图优化</h4><p>大多数手机的屏幕刷新频率是60hz，如果在1000/60=16.67ms内没有办法把这一帧的任务执行完毕，就会发生丢帧的现象。丢帧越多，用户感受到的卡顿情况就越严重。</p>
 <p>渲染操作通常依赖于两个核心组件：CPU与GPU。CPU负责包括Measure，Layout，Record，Execute的计算操作，GPU负责Rasterization(栅格化)操作。CPU通常存在的问题的原因是存在非必需的视图组件，它不仅仅会带来重复的计算操作，而且还会占用额外的GPU资源。为了能够使得App流畅，我们需要在每帧16ms以内处理完所有的CPU与GPU的计算，绘制，渲染等等操作。</p>
 <p>有很多原 因可以导致丢帧卡顿：</p>
 <ol>
 <li>人为在UI线程中做轻微耗时操作，导致UI线程卡顿；</li>
 <li>布局Layout过于复杂，无法在16ms内完成渲染；</li>
-<li>同一时间动画执行的次数过多，导致CPU或GPU负载过重；</li>
-<li>View过度绘制，导致某些像素在同一帧时间内被绘制多次，从而使CPU或GPU负载过重；</li>
-<li>View频繁的触发measure、layout，导致measure、layout累计耗时过多及整个View频繁的重新渲染；</li>
-<li>内存频繁触发GC过多（内存抖动），导致暂时阻塞渲染操作；</li>
-<li>冗余资源及逻辑等导致加载和执行缓慢；</li>
-<li>工作线程优先级未设置为Process.THREAD_PRIORITY_BACKGROUND,导致后台线程抢占UI线程cpu时间片，阻塞渲染操作；</li>
-</ol>
-<p><strong>过度绘制</strong>：描述的是屏幕上的某个像素在同一帧的时间内被绘制了多次。在多层次重叠的UI结构里面，如果不可见的UI也在做绘制的操作，会导致某些像素区域被绘制了多次。这样就会浪费大量的CPU以及GPU资源。<br> 避免过度绘制，如果出现了，那么很可能会造成刷新率下降，造成卡顿的现象</p>
-<p><strong>通过工具定位分析问题：</strong></p>
-<ul>
-<li>使用HierarchyViewer来查找Activity中的布局是否过于复杂。</li>
-<li>通过手机设置里面的开发者选项，打开Show GPU Overdraw的选项，观察UI上的过度绘制情况。</li>
-<li>复杂的自定义的View(重写了onDraw方法)，Android系统无法检测具体在onDraw里面会执行什么操作，系统无法监控并自动优化，也就无法避免Overdraw了。但是我们可以通过canvas.clipRect()来 帮助系统识别那些可见的区域。</li>
-</ul>
-<p><strong>通过代码进行优化</strong></p>
-<ul>
-<li>移除XML布局文件中非必需的Background</li>
-<li>采用<merge>优化布局层数，尽量减少布局层数。</merge></li>
-<li>采用&lt;include＞来共享布局.</li>
-<li>使用ViewSub来提高加载性能。延时加载View. 避免一些不经常的视图长期被引用，占用内存. </li>
-<li><p>尽量多使用RelativeLayout和LinearLayout, 不要使用绝对布局AbsoluteLayout，对于层数比较多的布局可以考虑使用约束布局：</p>
-<pre><code>compile &apos;com.android.support.constraint:constraint-layout:1.0.0-alpha8&apos;
-</code></pre></li>
-<li><p>使用merge标签减少布局的嵌套层次</p>
-</li>
-<li><p>尽量避免使用包含layout_weight属性的线性布局，因为每个子组件都需要被测量两次，会在绘制的时候浪费系统资源。尤其是当作为listview 或者GridView的item的布局的时候，建议使用RelativeLayout,也可以考虑使用<a href="https://developer.android.com/topic/libraries/support-library/features.html#percent" target="_blank" rel="external">百分比布局</a>：</p>
-<pre><code>com.android.support:percent:24.2.1
-</code></pre></li>
-</ul>
-
-          
+<li>同一时间动画执行的次数过多，导致CPU或GPU负载过重；
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/09/25/Android性能优化(视图优化)/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -786,7 +892,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-count">4</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -803,7 +909,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
