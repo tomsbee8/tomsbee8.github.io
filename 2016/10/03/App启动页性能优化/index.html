@@ -85,18 +85,24 @@
 
 
 <meta name="description" content="我在最初接触开发Android的时候，一直对启动页没有太多关注，大多数时候我们接触的App的启动页都是，一张图片（或多或少的会多一些其他的组件，比如“倒计时”，“跳过”啥的），启动页一般都会放置一个占位符，它存在的目的就是为了让用户在等待的过程中忽略这个开启的过程，其实也就是大家所说的提高了用户体验度，降低用户焦虑感。
-app的启动方式： 1.冷启动当启动应用时，后台没有该应用的进程，这时系统会重">
+app的启动方式：  
+
+冷启动当启动应用时，后台没有该应用的进程，这时系统会">
 <meta property="og:type" content="article">
 <meta property="og:title" content="App启动页性能优化">
 <meta property="og:url" content="https://tomsbee8.github.io/2016/10/03/App启动页性能优化/index.html">
 <meta property="og:site_name" content="TomsBee8's Blog">
 <meta property="og:description" content="我在最初接触开发Android的时候，一直对启动页没有太多关注，大多数时候我们接触的App的启动页都是，一张图片（或多或少的会多一些其他的组件，比如“倒计时”，“跳过”啥的），启动页一般都会放置一个占位符，它存在的目的就是为了让用户在等待的过程中忽略这个开启的过程，其实也就是大家所说的提高了用户体验度，降低用户焦虑感。
-app的启动方式： 1.冷启动当启动应用时，后台没有该应用的进程，这时系统会重">
-<meta property="og:updated_time" content="2016-10-03T16:14:33.108Z">
+app的启动方式：  
+
+冷启动当启动应用时，后台没有该应用的进程，这时系统会">
+<meta property="og:updated_time" content="2016-10-04T16:07:15.383Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="App启动页性能优化">
 <meta name="twitter:description" content="我在最初接触开发Android的时候，一直对启动页没有太多关注，大多数时候我们接触的App的启动页都是，一张图片（或多或少的会多一些其他的组件，比如“倒计时”，“跳过”啥的），启动页一般都会放置一个占位符，它存在的目的就是为了让用户在等待的过程中忽略这个开启的过程，其实也就是大家所说的提高了用户体验度，降低用户焦虑感。
-app的启动方式： 1.冷启动当启动应用时，后台没有该应用的进程，这时系统会重">
+app的启动方式：  
+
+冷启动当启动应用时，后台没有该应用的进程，这时系统会">
 
 
 
@@ -358,38 +364,55 @@ app的启动方式： 1.冷启动当启动应用时，后台没有该应用的�
 
       
         <p>我在最初接触开发Android的时候，一直对启动页没有太多关注，大多数时候我们接触的App的启动页都是，一张图片（或多或少的会多一些其他的组件，比如“倒计时”，“跳过”啥的），启动页一般都会放置一个占位符，它存在的目的就是为了让用户在等待的过程中忽略这个开启的过程，其实也就是大家所说的提高了用户体验度，降低用户焦虑感。</p>
-<p>app的启动方式：<br> 1.冷启动<br>当启动应用时，后台没有该应用的进程，这时系统会重新创建一个新的进程分配给该应用，这个启动方式就是冷启动。冷启动因为系统会重新创建一个新的进程分配给它，所以会先创建和初始化Application类，再创建和初始化MainActivity类（包括一系列的测量、布局、绘制），最后显示在界面上。 </p>
-<p>app的冷启动流程：</p>
-<pre><code>Application的构造器方法——&gt;attachBaseContext()——&gt;onCreate()——&gt;Activity的构造方法——&gt;onCreate()——&gt;配置主题中背景等属性——&gt;onStart()——&gt;onResume()——&gt;测量布局绘制显示在界面上 
-</code></pre><p> 2.热启动<br>当启动应用时，后台已有该应用的进程（例：按back键、home键，应用虽然会退出，但是该应用的进程是依然会保留在后台，可进入任务列表查看），所以在已有进程的情况下，这种启动会从已有的进程中来启动应用，这个方式叫热启动。热启动因为会从已有的进程中来启动，所以热启动就不会走Application这步了，而是直接走MainActivity（包括一系列的测量、布局、绘制），所以热启动的过程只需要创建和初始化一个MainActivity就行了，而不必创建和初始化Application，因为一个应用从新进程的创建到进程的销毁，Application只会初始化一次。  </p>
+<p>app的启动方式：  </p>
 <ol>
-<li>温启动：介于冷启动和热启动之间, 一般来说在以下两种情况下发生：1.用户back退出了App, 然后又启动. App进程可能还在运行, 但是activity需要重建;2.用户退出App后, 系统可能由于内存原因将App杀死, 进程和activity都需要重启, 但是可以在onCreate中将被动杀死锁保存的状态(saved instance state)恢复。</li>
+<li>冷启动<br>当启动应用时，后台没有该应用的进程，这时系统会重新创建一个新的进程分配给该应用，这个启动方式就是冷启动。冷启动因为系统会重新创建一个新的进程分配给它，所以会先创建和初始化Application类，再创建和初始化MainActivity类（包括一系列的测量、布局、绘制），最后显示在界面上。<br>app的冷启动流程：<br>Application的构造器方法—&gt;attachBaseContext()—&gt;onCreate()—&gt;Activity的构造方法—&gt;onCreate()—&gt;配置主题中背景等属性—&gt;onStart()—&gt;onResume()—&gt;测量布局绘制显示在界面上  </li>
+<li>热启动<br>当启动应用时，后台已有该应用的进程（例：按back键、home键，应用虽然会退出，但是该应用的进程是依然会   <a id="more"></a> 
+保留在后台，可进入任务列表查看），所以在已有进程的情况下，这种启动会从已有的进程中来启动应用，这个方式叫热启动。热启动因为会从已有的进程中来启动，所以热启动就不会走Application这步了，而是直接走MainActivity（包括一系列的测量、布局、绘制），所以热启动的过程只需要创建和初始化一个MainActivity就行了，而不必创建和初始化Application，因为一个应用从新进程的创建到进程的销毁，Application只会初始化一次。  </li>
+<li>温启动<br>介于冷启动和热启动之间, 一般来说在以下两种情况下发生：1.用户back退出了App, 然后又启动. App进程可能还在运行, 但是activity需要重建;2.用户退出App后, 系统可能由于内存原因将App杀死, 进程和activity都需要重启, 但是可以在onCreate中将被动杀死锁保存的状态(saved instance state)恢复。</li>
 </ol>
-<p>从冷启动的流程上看，启动性能的优化主要优化Application和启动页activity(或叫闪屏页)两个方面。</p>
+<p><strong>从冷启动的流程上看，启动性能的优化主要优化Application和启动页activity(或叫闪屏页)两个方面。</strong></p>
 <ol>
-<li>启动页的时间怎么消耗 </li>
+<li>启动页的时间怎么消耗<br>消耗时间主要会用在application的初始化和闪屏activity的生命周期。 </li>
 </ol>
-<p>一般情况下，都是设计的延迟时间（大多是2S~5S）从启动页跳转到主页面：</p>
-<pre><code>new Handler().postDelayed(new Runnable() {
- @Override
- public void run() {
-     startActivity(new Intent(StartActivity.this,MainActivity.class));
-   }
- }, 3000);
-</code></pre><p>消耗时间主要会用在application的初始化和闪屏activity的生命周期。<br>大多时候，我们app 的application初始化的时候做的工作有，配置网络请求、第三方SDK的初始化、。这些操作都是很消耗时间的。<br>在闪屏activity的生命周期中我们会一些加载用户数据等，者也是需要消耗时间的</p>
-<ol>
-<li><p>启动页的背景画面设计</p>
 <ul>
-<li>主页面风格类似的界面设计</li>
-<li>视频广告或者背景图片，需要主要图片不能太大导致OOM<br>给我们的应用窗口弄一个<a href="https://material.google.com/patterns/launch-screens.html#launch-screens-branded-launch" target="_blank" rel="external">PlaceHolder</a></li>
-<li>适当的组件，不能太复杂,因为渲染需要花费时间</li>
-<li>不能出现白屏或者黑屏的情况</li>
+<li>大多时候，我们app 的application初始化的时候做的工作有，配置网络请求、第三方SDK的初始化、。这些操作都是很消耗时间的。  我们可以单独拎出来，放到一个线程里处理，比如IntentService 就很好。</li>
+<li><p>在闪屏activity的生命周期中我们会一些加载用户数据等，者也是需要消耗时间的。一般情况下，都是设计的延迟时间（大多是2S~5S）从启动页跳转到主页面，例如：</p>
+<pre><code>new Handler().postDelayed(new Runnable() {
+     @Override
+       public void run() {
+         startActivity(new Intent(StartActivity.this,MainActivity.class));
+       }
+}, 3000);
+</code></pre><p> 如果我们做了耗时操作，往往时间会超过3S,我们可以使用计时器。把这些操作包含在那2~5s内。</p>
+</li>
+</ul>
+<ol>
+<li><p>启动页的背景画面设计<br> <strong>有两种情况</strong>：</p>
+<ul>
+<li><p>启动页activity不渲染布局，即没有setContentView()方法。但是给该activity的theme中设置background成图片（可以是logo）。<br>给我们的应用窗口弄一个<a href="https://material.google.com/patterns/launch-screens.html#launch-screens-branded-launch" target="_blank" rel="external">PlaceHolder</a>  ：   </p>
+<pre><code>&lt;style name=&quot;SplashTheme&quot; parent=&quot;AppTheme&quot;&gt;
+     &lt;item name=&quot;android:windowFullscreen&quot;&gt;true&lt;/item&gt;
+     &lt;item name=&quot;Android:windowBackground&quot;&gt;@drawable/splash_background&lt;/item&gt;
+&lt;/style&gt;
+</code></pre></li>
 </ul>
 </li>
-<li><p>启动页的特效</p>
-</li>
 </ol>
-<ol>
+<pre><code>- 启动页activity渲染布局，即有自己的渲染布局，有一些自己的组件，比如“图片广告”，“跳过”，“倒计时”，甚至是视频广告。  
+</code></pre><p>   需要注意的是布局不能太复杂,因为渲染需要花费时间。<br>   当App没有完全起来时, 进入该activity的时候屏幕会一直显示一块空白的窗口(一般来说是黑屏或者白屏).这样的话，体验将非常不好(虽然很快，就一闪而过),这个空白的窗口展示跟主题相关, 我们需要设置该activity的windowBackground的主题属性, 我们一般是单独为该activity设置为透明主题，即：  </p>
+<pre><code>&lt;style name=&quot;SplashTheme&quot; parent=&quot;AppTheme&quot;&gt;
+     &lt;item name=&quot;android:windowFullscreen&quot;&gt;true&lt;/item&gt;
+     &lt;item name=&quot;android:windowIsTranslucent&quot;&gt;true&lt;/item&gt;
+&lt;/style&gt;
+</code></pre><p>  当然，也有更好的方法，关闭android:windowDisablePreview即可，没必要设置透明，增大开销：  </p>
+<pre><code>&lt;style name=&quot;SplashTheme&quot; parent=&quot;AppTheme&quot;&gt;
+     &lt;item name=&quot;android:windowFullscreen&quot;&gt;true&lt;/item&gt;
+     &lt;item name=&quot;android:windowDisablePreview&quot;&gt;true&lt;/item&gt;
+&lt;/style&gt;
+</code></pre><ol>
+<li><p>启动页的特效<br>这个启动页界面往往实现了渐变，loading等效果，这样启动页面的耗时比较长的话，用户也不会觉得时间很长，难以忍受，当然了这种方式只是在视觉效果上造成“启动页面加载速度很快”的效果的。</p>
+</li>
 <li><p>返回键功能设计<br>返回键大多数时候会被屏蔽：</p>
 <pre><code> @Override
 public boolean onKeyDown(int keyCode, KeyEvent event) {
