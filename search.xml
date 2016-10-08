@@ -16,10 +16,9 @@
 </ol>
 <p><strong>从冷启动的流程上看，启动性能的优化主要优化Application和启动页activity(或叫闪屏页)两个方面。</strong></p>
 <ol>
-<li>启动页的时间怎么消耗<br>消耗时间主要会用在application的初始化和闪屏activity的生命周期。 </li>
-</ol>
+<li><p>启动页的时间怎么消耗<br><strong>消耗时间主要会用在application的初始化和闪屏activity的生命周期。</strong></p>
 <ul>
-<li>大多时候，我们app 的application初始化的时候做的工作有，配置网络请求、第三方SDK的初始化、。这些操作都是很消耗时间的。  我们可以单独拎出来，放到一个线程里处理，比如IntentService 就很好。</li>
+<li>大多时候，我们app 的application初始化的时候做的工作有，配置网络请求、第三方SDK的初始化、。这些操作都是很消耗时间的。  我们可以单独拎出来，放到一个线程里处理，比如IntentService 就很好。  </li>
 <li><p>在闪屏activity的生命周期中我们会一些加载用户数据等，者也是需要消耗时间的。一般情况下，都是设计的延迟时间（大多是2S~5S）从启动页跳转到主页面，例如：</p>
 <pre><code>new Handler().postDelayed(new Runnable() {
      @Override
@@ -27,10 +26,12 @@
          startActivity(new Intent(StartActivity.this,MainActivity.class));
        }
 }, 3000);
-</code></pre><p> 如果我们做了耗时操作，往往时间会超过3S,我们可以使用计时器。把这些操作包含在那2~5s内。</p>
-</li>
+</code></pre></li>
 </ul>
-<ol>
+<ul>
+<li>如果我们做了耗时操作，往往时间会超过3S,我们可以使用计时器，把这些操作包含在那2~5s内。</li>
+</ul>
+</li>
 <li><p>启动页的背景画面设计<br> <strong>有两种情况</strong>：</p>
 <ul>
 <li><p>启动页activity不渲染布局，即没有setContentView()方法。但是给该activity的theme中设置background成图片（可以是logo）。<br>给我们的应用窗口弄一个<a href="https://material.google.com/patterns/launch-screens.html#launch-screens-branded-launch" target="_blank" rel="external">PlaceHolder</a>  ：   </p>
@@ -39,21 +40,19 @@
      &lt;item name=&quot;Android:windowBackground&quot;&gt;@drawable/splash_background&lt;/item&gt;
 &lt;/style&gt;
 </code></pre></li>
-</ul>
-</li>
-</ol>
-<pre><code>- 启动页activity渲染布局，即有自己的渲染布局，有一些自己的组件，比如“图片广告”，“跳过”，“倒计时”，甚至是视频广告。  
-</code></pre><p>   需要注意的是布局不能太复杂,因为渲染需要花费时间。<br>   当App没有完全起来时, 进入该activity的时候屏幕会一直显示一块空白的窗口(一般来说是黑屏或者白屏).这样的话，体验将非常不好(虽然很快，就一闪而过),这个空白的窗口展示跟主题相关, 我们需要设置该activity的windowBackground的主题属性, 我们一般是单独为该activity设置为透明主题，即：  </p>
+<li><p>启动页activity渲染布局，即有自己的渲染布局，有一些自己的组件，比如“图片广告”，“跳过”，“倒计时”，甚至是视频广告。<br>需要注意的是布局不能太复杂,因为渲染需要花费时间。<br>当App没有完全起来时, 进入该activity的时候屏幕会一直显示一块空白的窗口(一般来说是黑屏或者白屏).这样的话，体验将非常不好(虽然很快，就一闪而过),这个空白的窗口展示跟主题相关, 我们需要设置该activity的windowBackground的主题属性, 我们一般是单独为该activity设置为透明主题，即：  </p>
 <pre><code>&lt;style name=&quot;SplashTheme&quot; parent=&quot;AppTheme&quot;&gt;
      &lt;item name=&quot;android:windowFullscreen&quot;&gt;true&lt;/item&gt;
      &lt;item name=&quot;android:windowIsTranslucent&quot;&gt;true&lt;/item&gt;
 &lt;/style&gt;
-</code></pre><p>  当然，也有更好的方法，关闭android:windowDisablePreview即可，没必要设置透明，增大开销：  </p>
+</code></pre><p>当然，也有更好的方法，关闭android:windowDisablePreview即可，没必要设置透明，增大开销：  </p>
 <pre><code>&lt;style name=&quot;SplashTheme&quot; parent=&quot;AppTheme&quot;&gt;
      &lt;item name=&quot;android:windowFullscreen&quot;&gt;true&lt;/item&gt;
      &lt;item name=&quot;android:windowDisablePreview&quot;&gt;true&lt;/item&gt;
 &lt;/style&gt;
-</code></pre><ol>
+</code></pre></li>
+</ul>
+</li>
 <li><p>启动页的特效<br>这个启动页界面往往实现了渐变，loading等效果，这样启动页面的耗时比较长的话，用户也不会觉得时间很长，难以忍受，当然了这种方式只是在视觉效果上造成“启动页面加载速度很快”的效果的。</p>
 </li>
 <li><p>返回键功能设计<br>返回键大多数时候会被屏蔽：</p>
@@ -66,13 +65,10 @@ return super.onKeyDown(keyCode, event);
 }
 </code></pre></li>
 </ol>
-<ul>
-<li>其他需要注意的地方：<ol>
+<h5 id="其他需要注意的地方-："><a href="#其他需要注意的地方-：" class="headerlink" title="其他需要注意的地方 ："></a>其他需要注意的地方 ：</h5><ul>
 <li>不要在application里面直接缓存数据，不要放置太多static final 的数据。因为Application会因为进入background后内存不足被系统干掉，进入后系统会重现创建一个Application类，而导致缓存在Application类里的数据全部初始化而丢失。</li>
 <li>不需要再单例application,因为application本来就是针对一个进程里所有组件唯一的。需要引用的话，直接getApplication().</li>
 <li>尽量不要在在Application中做关于文件，数据库，sharedPreference的操作，可以考虑单独线程了做这些工作</li>
-</ol>
-</li>
 </ul>
 <p>本文参考了 ：<br><a href="http://blog.csdn.net/yanzhenjie1003/article/details/52201896" title="秒开" target="_blank" rel="external">http://blog.csdn.net/yanzhenjie1003/article/details/52201896</a><br><a href="http://www.jianshu.com/p/4f10c9a10ac9" target="_blank" rel="external">http://www.jianshu.com/p/4f10c9a10ac9</a></p>
 ]]></content>
