@@ -4,6 +4,229 @@
   
     
     <entry>
+      <title><![CDATA[Android设置透明状态栏相关]]></title>
+      <url>https://tomsbee8.github.io/2018/02/03/Android%E4%B8%AD%E9%80%8F%E6%98%8E%E7%8A%B6%E6%80%81%E6%A0%8F%E5%85%A8%E9%9D%A2%E8%A7%A3%E8%AF%BB/</url>
+      <content type="html"><![CDATA[<p>StatusBar和NavigationBar适配详解</p>
+<hr>
+<h4 id="1-设置全屏"><a href="#1-设置全屏" class="headerlink" title="1.设置全屏"></a>1.设置全屏</h4><p>官方详细介绍：<a href="https://developer.android.com/design/patterns/fullscreen.html#immersive" target="_blank" rel="external">Immersive</a><br>官方示例：<a href="https://github.com/googlesamples/android-AdvancedImmersiveMode" target="_blank" rel="external">sample</a></p>
+<h6 id="SystemUIFlag详解"><a href="#SystemUIFlag详解" class="headerlink" title="SystemUIFlag详解"></a>SystemUIFlag详解</h6><table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>含义</th>
+<th>详细解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SYSTEM_UI_FLAG_LOW_PROFILE</td>
+<td>低能显示状态</td>
+<td>状态栏显示处于低能显示状态(low profile模式)，状态栏上一些图标显示会被隐藏。</td>
+</tr>
+<tr>
+<td>SYSTEM_UI_FLAG_FULLSCREEN</td>
+<td>Layout全屏显示，且状态栏会被隐藏覆盖</td>
+<td>等同于（WindowManager.LayoutParams.FLAG_FULLSCREEN）大多时候我们会在splash闪屏页使用</td>
+</tr>
+<tr>
+<td>SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN</td>
+<td>Layout全屏显示，但是状态栏会被覆盖但是不会隐藏</td>
+<td>大多时候我们会同时设置状态栏透明</td>
+</tr>
+<tr>
+<td>SYSTEM_UI_FLAG_HIDE_NAVIGATION</td>
+<td>隐藏虚拟导航栏</td>
+<td></td>
+</tr>
+<tr>
+<td>SYSTEM_UI_FLAG_IMMERSIVE</td>
+<td>沉浸模式</td>
+<td></td>
+</tr>
+<tr>
+<td>SYSTEM_UI_FLAG_IMMERSIVE_STICKY</td>
+<td>Sticky的沉浸模式</td>
+<td></td>
+</tr>
+<tr>
+<td>SYSTEM_UI_FLAG_LAYOUT_STABLE</td>
+<td>提高UI稳定</td>
+<td>保持Layout不变，隐藏状态栏或者导航栏后，View不会拉伸。</td>
+</tr>
+</tbody>
+</table>
+<h6 id="全屏模式细分："><a href="#全屏模式细分：" class="headerlink" title="全屏模式细分："></a>全屏模式细分：</h6><table>
+<thead>
+<tr>
+<th>模式</th>
+<th>包含的Flag</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>leanbackMode</td>
+<td>SYSTEM_UI_FLAG_FULLSCREEN、SYSTEM_UI_FLAG_HIDE_NAVIGATION</td>
+<td>点击屏幕任意地方都会退出全屏模式</td>
+</tr>
+<tr>
+<td>ImmersiveMode</td>
+<td>SYSTEM_UI_FLAG_FULLSCREEN、SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN、SYSTEM_UI_FLAG_HIDE_NAVIGATION、SYSTEM_UI_FLAG_IMMERSIVE</td>
+<td>点击屏幕不会退出全屏，从状态栏或者导航栏滑动到内容区域会退出全屏模式，会清除flag,并触发View.OnSystemUiVisibilityChangeListener()事件监听</td>
+</tr>
+<tr>
+<td>ImmersiveStickyMode</td>
+<td>SYSTEM_UI_FLAG_FULLSCREEN、SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN、SYSTEM_UI_FLAG_HIDE_NAVIGATION、SYSTEM_UI_FLAG_IMMERSIVE_STICKY</td>
+<td>点击屏幕不会退出全屏，从状态栏或者导航栏滑动到内容区域会暂时退出全屏模式（过一会儿如果没有操作又回进入全屏模式），并且状态栏和导航栏处于半透明的状态,不会清除flag,不会触发View.OnSystemUiVisibilityChangeListener()事件监听</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2-设置透明状态栏"><a href="#2-设置透明状态栏" class="headerlink" title="2. 设置透明状态栏"></a>2. 设置透明状态栏</h4><p>Android 系统从4.4开始支持透明状态栏,效果在 4.4.x 和 5.x 上表现不同，4.4.x 是一层渐变的遮罩层；5.x 以上是一条半透明的遮罩层。</p>
+<ul>
+<li>通过theme 设置：</li>
+</ul>
+<p>values-19文件夹中的style：</p>
+<pre><code>&lt;style name=&quot;AppTheme.ExtendStatusBar&quot; parent=&quot;AppTheme&quot;&gt;
+     &lt;item name=&quot;android:windowTranslucentStatus&quot;&gt;true&lt;/item&gt;
+&lt;/style&gt;
+</code></pre><ul>
+<li><p>通过代码设置：</p>
+<p>   activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);</p>
+</li>
+</ul>
+<p>设置完毕后，还需要给layout 设置fitsSystemWindows属性为true，系统就会调整该view的padding值来留出空间给系统窗体。表现为，padding出status bar的高度给status bar使用，不至于我们定义layout跟status bar重叠！<br>这是因为fitsSystemWindows属性使得布局的paddingTop被重新改写了（paddingTop增加了状态栏的高度）。也可以通过代码来设置，需要在setContentView()方法 之后添加(代码来自<a href="https://www.jianshu.com/p/0acc12c29c1b" target="_blank" rel="external">这里</a>)</p>
+<pre><code>ViewGroup contentFrameLayout = (ViewGroup) findViewById(Window.ID_ANDROID_CONTENT);
+    View parentView = contentFrameLayout.getChildAt(0);
+    if (parentView != null &amp;&amp; Build.VERSION.SDK_INT &gt;= 14) {
+        parentView.setFitsSystemWindows(true);
+    }
+</code></pre><h4 id="3-设置状态栏背景颜色"><a href="#3-设置状态栏背景颜色" class="headerlink" title="3. 设置状态栏背景颜色"></a>3. 设置状态栏背景颜色</h4><p>Android 系统从5.0开始支持设置状态栏的背景颜色</p>
+<ul>
+<li>通过theme 设置：</li>
+</ul>
+<p>values-21文件夹中的style：</p>
+<pre><code>&lt;style name=&quot;AppTheme.Main&quot; parent=&quot;AppTheme&quot;&gt;
+    &lt;item name=&quot;android:windowTranslucentStatus&quot;&gt;true&lt;/item&gt;
+    &lt;item name=&quot;android:windowTranslucentNavigation&quot;&gt;true&lt;/item&gt;
+    &lt;item name=&quot;android:statusBarColor&quot;&gt;@android:color/holo_red_dark&lt;/item&gt;
+&lt;/style&gt;
+</code></pre><ul>
+<li><p>通过代码设置：</p>
+<pre><code>activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+  activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+  activity.getWindow().setStatusBarColor(calculateStatusColor(color, statusBarAlpha));
+</code></pre></li>
+</ul>
+<h4 id="4-设置状态栏字体颜色"><a href="#4-设置状态栏字体颜色" class="headerlink" title="4. 设置状态栏字体颜色"></a>4. 设置状态栏字体颜色</h4><p>Android 6.0API window添加了一个<a href="https://developer.android.com/reference/android/R.attr.html#windowLightStatusBar" target="_blank" rel="external">windowLightStatusBar</a>的属性，是为了解决当状态栏被设为和白色相近的浅色的话，状态栏上的系统图标文字就看不到了的问题。</p>
+<ul>
+<li>通过theme 设置：</li>
+</ul>
+<p>values-23文件夹中的style：</p>
+<pre><code>&lt;style name=&quot;AppTheme.Main&quot; parent=&quot;AppTheme&quot;&gt;
+    &lt;item name=&quot;android:windowLightStatusBar&quot;&gt;true&lt;/item&gt;
+&lt;/style&gt;
+</code></pre><ul>
+<li><p>通过代码设置：</p>
+<pre><code>if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.M) {
+    int uiOptions = activity.getWindow().getDecorView().getSystemUiVisibility();
+    uiOptions |=View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+}
+</code></pre></li>
+</ul>
+<p>魅族Flyme和小米MIUI本身提供了修改状态栏的文字和图标颜色的方法，可以将状态栏的系统文字和图标颜色设置为深色。<br>魅族手机状态栏设置：<a href="http://open-wiki.flyme.cn/index.php?title=%E7%8A%B6%E6%80%81%E6%A0%8F%E5%8F%98%E8%89%B2" target="_blank" rel="external">官方文档</a><br>小米手机状态栏设置：<a href="https://dev.mi.com/console/doc/detail?pId=1159" target="_blank" rel="external">官方文档</a></p>
+<p>以上两个官方文档中都有设置代码，我汇总一下，最终代码如下：</p>
+<pre><code>/**
+ * 设置动态变色的状态栏
+ *
+ * @param activity     当前activity
+ * @param isLightColor 是否是淡色
+ */
+public static void setLightStatusBar(@NonNull Activity activity, boolean isLightColor) {
+    if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.M) {
+        if (isLightColor) {
+            int uiOptions = activity.getWindow().getDecorView().getSystemUiVisibility();
+            uiOptions |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+            activity.getWindow().getDecorView().setSystemUiVisibility(uiOptions);
+        } else {
+            int uiOptions = activity.getWindow().getDecorView().getSystemUiVisibility();
+            uiOptions &amp;= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+            activity.getWindow().getDecorView().setSystemUiVisibility(uiOptions);
+        }
+    } else {
+        if (RomUtil.isMIUI()) {
+            setMIUIStatusBarDarkMode(activity, isLightColor);
+        } else if (RomUtil.isFlyme()) {
+            setFlymeStatusBarDarkMode(activity, isLightColor);
+        }
+    }
+}
+
+/**
+ * 在旧的MIUI版本(Android 6.0以下)设置状态栏字体颜色
+ *
+ * @param activity 当前activity
+ * @param darkmode 是否为黑色字体图标
+ */
+private static void setMIUIStatusBarDarkMode(@NonNull Activity activity, boolean darkmode) {
+    Class&lt;? extends Window&gt; clazz = activity.getWindow().getClass();
+    try {
+        int darkModeFlag = 0;
+        Class&lt;?&gt; layoutParams = Class.forName(&quot;android.view.MiuiWindowManager$LayoutParams&quot;);
+        Field field = layoutParams.getField(&quot;EXTRA_FLAG_STATUS_BAR_DARK_MODE&quot;);
+        darkModeFlag = field.getInt(layoutParams);
+        Method extraFlagField = clazz.getMethod(&quot;setExtraFlags&quot;, int.class, int.class);
+        extraFlagField.invoke(activity.getWindow(), darkmode ? darkModeFlag : 0, darkModeFlag);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+
+/**
+ * 在旧的Flyme版本(Android 6.0以下)设置状态栏字体颜色
+ *
+ * @param activity 当前activity
+ * @param darkmode 是否为深色字体图标
+ */
+private static void setFlymeStatusBarDarkMode(@NonNull Activity activity, boolean darkmode) {
+
+    try {
+        ViewGroup.LayoutParams winParams = activity.getWindow().getAttributes();
+        Field f = winParams.getClass().getDeclaredField(&quot;MEIZU_FLAG_DARK_STATUS_BAR_ICON&quot;);
+        f.setAccessible(true);
+        int bits = f.getInt(winParams);
+        Field f2 = winParams.getClass().getDeclaredField(&quot;meizuFlags&quot;);
+        f2.setAccessible(true);
+        int meizuFlags = f2.getInt(winParams);
+        int oldFlags = meizuFlags;
+        if (darkmode) {
+            meizuFlags |= bits;
+        } else {
+            meizuFlags &amp;= ~bits;
+        }
+        if (oldFlags != meizuFlags) {
+            f2.setInt(winParams, meizuFlags);
+        }
+    } catch (NoSuchFieldException e) {
+        e.printStackTrace();
+    } catch (IllegalAccessException e) {
+        e.printStackTrace();
+    } catch (IllegalArgumentException e) {
+        e.printStackTrace();
+    } catch (Throwable e) {
+        e.printStackTrace();
+    }
+}
+</code></pre><h5 id="已知的手机适配问题"><a href="#已知的手机适配问题" class="headerlink" title="已知的手机适配问题"></a>已知的手机适配问题</h5><ul>
+<li>华为EMUI3.1（Android5.0／5.1 Lollipop） 状态栏设置无效。经过验证，无法按照5.0 API 设置，但是可以按照4.4 API设置，设置后的效果也r仍然是4.4API的效果。</li>
+</ul>
+<h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><ul>
+<li><a href="http://blog.csdn.net/mafei852213034/article/details/51769952" target="_blank" rel="external">http://blog.csdn.net/mafei852213034/article/details/51769952</a></li>
+<li><a href="http://blog.csdn.net/mafei852213034/article/details/51769952" target="_blank" rel="external">http://blog.csdn.net/mafei852213034/article/details/51769952</a></li>
+</ul>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[App启动页性能优化]]></title>
       <url>https://tomsbee8.github.io/2016/10/03/App%E5%90%AF%E5%8A%A8%E9%A1%B5%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/</url>
       <content type="html"><![CDATA[<p>我在最初接触开发Android的时候，一直对启动页没有太多关注，大多数时候我们接触的App的启动页都是，一张图片（或多或少的会多一些其他的组件，比如“倒计时”，“跳过”啥的），启动页一般都会放置一个占位符，它存在的目的就是为了让用户在等待的过程中忽略这个开启的过程，其实也就是大家所说的提高了用户体验度，降低用户焦虑感。</p>
