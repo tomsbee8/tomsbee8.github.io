@@ -278,6 +278,233 @@
             
               
                 
+                <a class="post-title-link" href="/2018/03/03/记录一次第三方IM迁移流程/" itemprop="url">
+                  记录一次IM迁移流程
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-03-03T15:09:50+08:00" content="2018-03-03">
+              2018-03-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/others/" itemprop="url" rel="index">
+                    <span itemprop="name">others</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2018/03/03/记录一次第三方IM迁移流程/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/03/03/记录一次第三方IM迁移流程/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2018/03/03/记录一次第三方IM迁移流程/" class="leancloud_visitors" data-flag-title="记录一次IM迁移流程">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>最近公司出于某些考虑打算更换第三方 IM 服务，我们 app 集成的是环信IM,打算更换为云星的SDK，而且 app 的现有用户量很大。刚好我一直在维护更新 IM 这个模块，然后前段时间 有小伙伴研究了我们 app 的 IM 服务架构迁移技术上的可行性，认为可行。现在呢，正准备实施转移了，虽然讨论了很多方案，我感觉工作量还是相当的大，复杂度还是比较高的。我们端上来协调工作，诸如：制定迁移流程，制定迁移消息协议等。我参与讨论很久，我对于IM的了解还算相对多一些。个人梳理的基本流程是：IM server 里拆解再组装用户和群组数据、App 端上复制本地消息数据、端上强制升级。</p>
+</blockquote>
+<h3 id="版本流程"><a href="#版本流程" class="headerlink" title="版本流程"></a>版本流程</h3><table>
+<thead>
+<tr>
+<th>V4.5【最初版本】</th>
+<th>V4.6【过渡版本】</th>
+<th>V4.7【最终版本】</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>环信「使用」<br></td>
+<td>环信[不使用] 网易云信[使用]</td>
+<td><br>网易云信[使用]</td>
+</tr>
+</tbody>
+</table>
+<h3 id="升级说明："><a href="#升级说明：" class="headerlink" title="升级说明："></a>升级说明：</h3><ul>
+<li><strong>V4.5 —&gt;  V4.6</strong>:为强制升级【也就是说，当4.6版本发布后，视为所有用户为4.6版本】<br>升级后，所有会话使用网易云信通道进行聊天，环信存在的意义在于提供数据复制转移。<br><strong>对于新用户</strong>：注册的时候，只会在网易云信上添加新用户。<br><strong>对于老用户</strong>：用户信息需在升级之前在网易云服务端建立。环信登录后，会进行app端上的本地<strong>数据复制转移</strong>，<br><strong>对于已经存在的群组</strong>：群组需在升级之前在网易云服务端建立。<br><strong>对于新建的群组</strong>：新建群组的时候，只会在网易云信上添加新的群组.</li>
+<li><strong>V4.6 —&gt;  V4.7</strong>:不强制升级，升级后只是去除了环信的冗余包和数据</li>
+</ul>
+<h3 id="数据拆解再组装-："><a href="#数据拆解再组装-：" class="headerlink" title="数据拆解再组装 ："></a>数据拆解再组装 ：</h3><ol>
+<li><strong>网易云信Server</strong>: 需要复制用户信息，复制群组信息，实现方式是：在appServer调用环信服务API获取用户信息及群组信息，然后拆解后组装，最后通过调用网易云信服务端API批量创建。</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>备注</th>
+<th>API操作文档链接</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>环信批量获取用户信息</td>
+<td>需要多次请求多页数据才能全部完成操作</td>
+<td><a href="http://docs.easemob.com/im/100serverintegration/20users" target="_blank" rel="external">获取IM用户【批量】</a></td>
+</tr>
+<tr>
+<td>环信批量获取群组信息</td>
+<td>需要多次请求多页数据才能全部操作完成</td>
+<td><a href="http://docs.easemob.com/im/100serverintegration/60groupmgmt" target="_blank" rel="external">分页获取app下的群组</a></td>
+</tr>
+<tr>
+<td>网易云信添加用户</td>
+<td>不支持批量添加，一次API调用只添加一个</td>
+<td><a href="http://dev.netease.im/docs/product/IM%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AF/%E6%9C%8D%E5%8A%A1%E7%AB%AFAPI%E6%96%87%E6%A1%A3/%E7%BD%91%E6%98%93%E4%BA%91%E9%80%9A%E4%BF%A1ID?#%E5%88%9B%E5%BB%BA%E7%BD%91%E6%98%93%E4%BA%91%E9%80%9A%E4%BF%A1ID" target="_blank" rel="external">创建网易云通信ID</a></td>
+</tr>
+<tr>
+<td>网易云信添加群组</td>
+<td>不支持批量添加，一次API调用只添加一个</td>
+<td><a href="http://dev.netease.im/docs/product/IM%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AF/%E6%9C%8D%E5%8A%A1%E7%AB%AFAPI%E6%96%87%E6%A1%A3/%E7%BE%A4%E7%BB%84%E5%8A%9F%E8%83%BD%EF%BC%88%E9%AB%98%E7%BA%A7%E7%BE%A4%EF%BC%89?#%E5%88%9B%E5%BB%BA%E7%BE%A4" target="_blank" rel="external">创建群</a></td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li><strong>APP端</strong>: 复制本地会话消息,会话的本质还是消息，有了历史消息数据，云信SDK就可以提供会话。所以在端上只需要提供消息的拆解和组装即可。<br>| 操作 | 备注 | 操作文档连接 |<br>| — | — | — |<br>| 环信Android本地消息获取 | 先获取会话列表，然后根据获取会话的历史记录 | [获取聊天记录] (<a href="http://docs.easemob.com/im/200androidclientintegration/50singlechat" target="_blank" rel="external">http://docs.easemob.com/im/200androidclientintegration/50singlechat</a>) |<br>环信iOS本地消息获取 | 先获取会话列表，然后根据获取会话的历史记录 | <a href="http://docs.easemob.com/im/300iosclientintegration/40emmsg" target="_blank" rel="external">消息-&gt;消息检索</a><br>网易云信Android 本地消息插入 | 保存消息到本地数据库，但不发送到服务器端 | <a href="http://dev.netease.im/docs/product/IM%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AF/SDK%E5%BC%80%E5%8F%91%E9%9B%86%E6%88%90/Android%E5%BC%80%E5%8F%91%E9%9B%86%E6%88%90/%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95?#%E6%8F%92%E5%85%A5%E6%9C%AC%E5%9C%B0%E6%B6%88%E6%81%AF" target="_blank" rel="external">历史记录–&gt;插入本地消息</a><br>网易云信iOS本地消息插入 |保存消息到本地数据库，但不发送到服务器端，仅仅支持文本消息、提醒消息、自定义消息 | <a href="http://dev.netease.im/docs/product/IM%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AF/SDK%E5%BC%80%E5%8F%91%E9%9B%86%E6%88%90/iOS%E5%BC%80%E5%8F%91%E9%9B%86%E6%88%90/%E6%9C%80%E8%BF%91%E4%BC%9A%E8%AF%9D" target="_blank" rel="external">写入本地消息</a></li>
+</ol>
+<h3 id="聊天交互相关的页面"><a href="#聊天交互相关的页面" class="headerlink" title="聊天交互相关的页面"></a>聊天交互相关的页面</h3><table>
+<thead>
+<tr>
+<th>页面</th>
+<th>相关操作 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> Application</td>
+<td>IM SDK初始化「全局消息通知方式初始化等」 </td>
+</tr>
+<tr>
+<td>注册登录页面</td>
+<td>登录app Server完成后进行环信登录，登录完成后加载本地会话和群组到内存中</td>
+<td></td>
+</tr>
+<tr>
+<td>闪屏页面</td>
+<td>登录完成后加载本地会话和群组到内存中 </td>
+</tr>
+<tr>
+<td>主页面</td>
+<td>监听环信连接相关Listener（断开，连接，被踢）<br> 监听群组Listener()<br> 监听环信消息Listener(监听新消息)</td>
+</tr>
+<tr>
+<td>消息会话页面</td>
+<td>读取会话列表并展现 </td>
+</tr>
+<tr>
+<td>聊天页面</td>
+<td>读取本地记录，接收消息，发送消息 </td>
+</tr>
+<tr>
+<td>设置页面</td>
+<td>退出时断开环信连接 </td>
+</tr>
+</tbody>
+</table>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2018/02/03/Android中透明状态栏全面解读/" itemprop="url">
                   Android设置透明状态栏相关
                 </a>
@@ -573,6 +800,169 @@ private static void setFlymeStatusBarDarkMode(@NonNull Activity activity, boolea
 <h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><ul>
 <li><a href="http://blog.csdn.net/mafei852213034/article/details/51769952" target="_blank" rel="external">http://blog.csdn.net/mafei852213034/article/details/51769952</a></li>
 <li><a href="http://blog.csdn.net/mafei852213034/article/details/51769952" target="_blank" rel="external">http://blog.csdn.net/mafei852213034/article/details/51769952</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/03/Arc 代码审查规范流程/" itemprop="url">
+                  Arc 代码审查规范流程
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-01-03T22:12:22+08:00" content="2017-01-03">
+              2017-01-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/others/" itemprop="url" rel="index">
+                    <span itemprop="name">others</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/01/03/Arc 代码审查规范流程/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/03/Arc 代码审查规范流程/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/01/03/Arc 代码审查规范流程/" class="leancloud_visitors" data-flag-title="Arc 代码审查规范流程">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h5 id="Arc-代码审查规范流程"><a href="#Arc-代码审查规范流程" class="headerlink" title="Arc 代码审查规范流程"></a>Arc 代码审查规范流程</h5><p>我们认为CodeReview代码审查的直接作用就是规范代码习惯、找出潜在缺陷、BUG，优化代码设计，对产品质量进行把关。对于码农来说也是有好处的，可以促进工程师日常代码交流和帮助个人的成长。</p>
+<p>最近公司选用Phabricator作为内部的的代码评审工具。配合Arcanist使用感觉还是挺不错的。其中Arcanist作为提交代码评审的工具。</p>
+<h5 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h5><ol>
+<li>从主干上面切换到此开发分支：git checkout   develop</li>
+<li>提交信息git commit -m “xxxMessage”</li>
+<li>提交与远端develop分支的差异revision：arc diff origin/develop</li>
+</ol>
+<blockquote>
+<p>Attention: 如果当前分支已经有未推送的revision,将会update revision,而不会产生新的revision，如果需要另加revision，可以使用：arc diff –create origin/develop</p>
+</blockquote>
+<ol>
+<li>推送到远端develop分支：arc land –onto develop </li>
+</ol>
+<blockquote>
+<p>Attention: 如果不指定分支，直接使用arc land ,将会自动合并到 origin master 并且删除当前本地develop分支，当然也可通过配置设置arc.land.onto.default来指定默认推送分支：arc set-config  arc.land.onto.default develop </p>
+</blockquote>
+<h5 id="Others"><a href="#Others" class="headerlink" title="Others"></a>Others</h5><ul>
+<li><p>配置arc的默认编辑器使用vi，可以直接命令行执行：</p>
+<p>  arc set-config editor “vim”<br>或者修改当前用户目录下的.arcrc文件：</p>
+</li>
+</ul>
+<pre><code>{
+  &quot;hosts&quot;: {
+    &quot;xxxx&quot;: {
+      &quot;token&quot;: &quot;xxxxx&quot;
+    }
+  },
+ &quot;config&quot;: {
+    &quot;editor&quot;: &quot;vim&quot;,
+    &quot;arc.land.onto.default&quot;: &quot;develop&quot;
+  }
+} 
+</code></pre><h5 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h5><ul>
+<li><a href="https://secure.phabricator.com/book/phabricator/article/arcanist/" target="_blank" rel="external">Arcanist User Guide</a></li>
 </ul>
 
           
@@ -1192,7 +1582,7 @@ private static void setFlymeStatusBarDarkMode(@NonNull Activity activity, boolea
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-count">7</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1200,7 +1590,7 @@ private static void setFlymeStatusBarDarkMode(@NonNull Activity activity, boolea
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1209,7 +1599,7 @@ private static void setFlymeStatusBarDarkMode(@NonNull Activity activity, boolea
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
