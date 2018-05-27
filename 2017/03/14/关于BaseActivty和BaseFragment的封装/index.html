@@ -1,0 +1,1067 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="base," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="浅谈BaseActivity的封装在项目中，我们在使用Activity和fragment的时候一般会在基类里封装一些共有的逻辑，每个人可能都有不同封装思路，考虑的逻辑也会不同。这些共有的逻辑有很多,下面就来总结下我们通常会考虑的一些封装内容。
+
+状态栏，底部导航栏设置系统从4.4开始支持透明状态栏,效果在不同版本上表现不同，实现方式主要有设置主题style 和在activity中手动设置需要对每个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅谈BaseActivity的封装">
+<meta property="og:url" content="https://tomsbee8.github.io/2017/03/14/关于BaseActivty和BaseFragment的封装/index.html">
+<meta property="og:site_name" content="TomsBee8's Blog">
+<meta property="og:description" content="浅谈BaseActivity的封装在项目中，我们在使用Activity和fragment的时候一般会在基类里封装一些共有的逻辑，每个人可能都有不同封装思路，考虑的逻辑也会不同。这些共有的逻辑有很多,下面就来总结下我们通常会考虑的一些封装内容。
+
+状态栏，底部导航栏设置系统从4.4开始支持透明状态栏,效果在不同版本上表现不同，实现方式主要有设置主题style 和在activity中手动设置需要对每个">
+<meta property="og:updated_time" content="2018-05-26T16:41:17.329Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="浅谈BaseActivity的封装">
+<meta name="twitter:description" content="浅谈BaseActivity的封装在项目中，我们在使用Activity和fragment的时候一般会在基类里封装一些共有的逻辑，每个人可能都有不同封装思路，考虑的逻辑也会不同。这些共有的逻辑有很多,下面就来总结下我们通常会考虑的一些封装内容。
+
+状态栏，底部导航栏设置系统从4.4开始支持透明状态栏,效果在不同版本上表现不同，实现方式主要有设置主题style 和在activity中手动设置需要对每个">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 4406661,
+      author: 'ForNever'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://tomsbee8.github.io/2017/03/14/关于BaseActivty和BaseFragment的封装/"/>
+
+  <title> 浅谈BaseActivity的封装 | TomsBee8's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">TomsBee8's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">我的刀锋渴望收割</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                浅谈BaseActivity的封装
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-03-14T15:04:23+08:00" content="2017-03-14">
+              2017-03-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/03/14/关于BaseActivty和BaseFragment的封装/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/14/关于BaseActivty和BaseFragment的封装/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/03/14/关于BaseActivty和BaseFragment的封装/" class="leancloud_visitors" data-flag-title="浅谈BaseActivity的封装">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="浅谈BaseActivity的封装"><a href="#浅谈BaseActivity的封装" class="headerlink" title="浅谈BaseActivity的封装"></a>浅谈BaseActivity的封装</h2><p>在项目中，我们在使用Activity和fragment的时候一般会在基类里封装一些共有的逻辑，每个人可能都有不同封装思路，考虑的逻辑也会不同。这些共有的逻辑有很多,下面就来总结下我们通常会考虑的一些封装内容。</p>
+<ol>
+<li><strong>状态栏，底部导航栏设置</strong><br>系统从4.4开始支持透明状态栏,效果在不同版本上表现不同，实现方式主要有设置主题style 和在activity中手动设置需要对每个Activity进行适配。现在的App大多都对状态栏进行适配。这些都是一些相同的逻辑：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">    super.onCreate(savedInstanceState);</div><div class="line">    setStatusBar();</div><div class="line">    ...</div><div class="line">&#125;</div><div class="line"> protected void setStatusBar() &#123;</div><div class="line">   SystemBarUtil.setTranslucentStatusBar(this,true);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其中SystemBarUtil的封装参见我的 SystemBarUtil</p>
+<ol>
+<li><strong>共有的控件，如toolbar或者自定义的titleBar</strong> <a id="more"></a>
+Toolbar作为谷歌推荐的标题栏控件,其使用很普遍，当然也有人喜欢自定义布局作为标题栏（此处不另外写例子）。如<br>果在每个Activity里面都写一个Toolbar的话，显然有点冗余，一般情况下在BaseActivity封装好Toolbar，在子类用BaseActivity提供的方法调用即可。<br>先是基类的layout文件：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">&lt;android.support.constraint.ConstraintLayout</div><div class="line">    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</div><div class="line">    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;</div><div class="line">    android:layout_width=&quot;match_parent&quot;</div><div class="line">    android:layout_height=&quot;match_parent&quot;&gt;</div><div class="line"></div><div class="line">    &lt;android.support.v7.widget.Toolbar</div><div class="line">        android:id=&quot;@+id/common_tb&quot;</div><div class="line">        android:layout_width=&quot;match_parent&quot;</div><div class="line">        android:layout_height=&quot;56dp&quot;</div><div class="line">        android:background=&quot;@color/main_color&quot;</div><div class="line">        app:layout_constraintTop_toTopOf=&quot;parent&quot;</div><div class="line">        app:layout_collapseMode=&quot;pin&quot;</div><div class="line">        app:popupTheme=&quot;@style/ThemeOverlay.AppCompat.Light&quot;&gt;</div><div class="line"></div><div class="line">        &lt;TextView</div><div class="line">            android:id=&quot;@+id/common_center_tv&quot;</div><div class="line">            android:layout_width=&quot;wrap_content&quot;</div><div class="line">            android:layout_height=&quot;wrap_content&quot;</div><div class="line">            android:layout_gravity=&quot;center&quot;</div><div class="line">            android:singleLine=&quot;true&quot;</div><div class="line">            android:textSize=&quot;15sp&quot;</div><div class="line">            android:text=&quot;标题&quot;</div><div class="line">            android:textColor=&quot;@android:color/white&quot; /&gt;</div><div class="line">    &lt;/android.support.v7.widget.Toolbar&gt;</div><div class="line"></div><div class="line">    &lt;RelativeLayout</div><div class="line">        android:id=&quot;@+id/common_content_rl&quot;</div><div class="line">        android:layout_width=&quot;match_parent&quot;</div><div class="line">        android:layout_height=&quot;0dp&quot;</div><div class="line">        app:layout_constraintTop_toBottomOf=&quot;@+id/common_tb&quot;</div><div class="line">        app:layout_constraintBottom_toBottomOf=&quot;parent&quot;&gt;</div><div class="line"></div><div class="line">    &lt;/RelativeLayout&gt;</div><div class="line"></div><div class="line">&lt;/android.support.constraint.ConstraintLayout&gt;</div></pre></td></tr></table></figure>
+<p>然后是基类中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line">public abstract class BaseActivity extends AppCompatActivity &#123;</div><div class="line"></div><div class="line">    private Toolbar mToolbar;</div><div class="line">    private RelativeLayout mContentRL;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onCreate(@Nullable Bundle savedInstanceState) &#123;</div><div class="line">        super.onCreate(savedInstanceState);</div><div class="line">        setContentView(getContentLayout());</div><div class="line">        setToolBar();</div><div class="line">        initView();</div><div class="line">        initData();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onNewIntent(Intent intent) &#123;</div><div class="line">        super.onNewIntent(intent);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    protected abstract @LayoutRes int getLayout();</div><div class="line"></div><div class="line">    protected @LayoutRes int getContentLayout()&#123;</div><div class="line">        if(useToolbar())&#123;</div><div class="line">            return R.layout.common_toolbar_container;</div><div class="line">        &#125;else&#123;</div><div class="line">            return getLayout();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    protected abstract boolean useToolbar();</div><div class="line"></div><div class="line">    protected abstract void initView();</div><div class="line"></div><div class="line">    protected abstract void initData();</div><div class="line"></div><div class="line">    protected void setToolBar()&#123;</div><div class="line">        mToolbar = (Toolbar) findViewById(R.id.common_tb);</div><div class="line">        setSupportActionBar(mToolbar);</div><div class="line">        android.support.v7.app.ActionBar actionBar = getSupportActionBar();</div><div class="line">        if (actionBar != null)&#123;</div><div class="line">            actionBar.setDisplayHomeAsUpEnabled(true);</div><div class="line">            actionBar.setDisplayShowTitleEnabled(false);</div><div class="line">        &#125;</div><div class="line">        mContentRL = (RelativeLayout) findViewById(R.id.common_content_rl);</div><div class="line">        if(useToolbar())&#123;</div><div class="line">            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);</div><div class="line">            View contentView = inflater.inflate(getLayout(), null);</div><div class="line">            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,</div><div class="line">                    ViewGroup.LayoutParams.MATCH_PARENT);</div><div class="line">            mContentRL.addView(contentView, params);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li><strong>基本生命周期以及第三方统计</strong></li>
+</ol>
+<p>用过友盟数据统计的同学应该知道，为了统计每个页面的点击事件，页面访问路径，异常信息等我们需要在Activity的生命周期方法中添加友盟的API，这些都是一些相同的逻辑，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">protected void onResume() &#123;</div><div class="line">    MobclickAgent.onResume(this);</div><div class="line">&#125;</div><div class="line"></div><div class="line">@Override</div><div class="line">protected void onPause() &#123;</div><div class="line">    MobclickAgent.onPause(this);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li><strong>进出场动画效果</strong></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">@Override</div><div class="line">protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">    super.onCreate(savedInstanceState);</div><div class="line">    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);</div><div class="line">    ...</div><div class="line">&#125;</div><div class="line">@Override</div><div class="line">public void finish() &#123;</div><div class="line">    super.finish();</div><div class="line">    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li><strong>定义一些共有的UI操作，例如toast,popupWindow,snackbar,dialog</strong></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public void showLoadingPregoress() &#123;</div><div class="line">     ...</div><div class="line">&#125;</div><div class="line">public void showLoadingDialog() &#123;</div><div class="line">     ...</div><div class="line">&#125;</div><div class="line">public void showLoadingDialog(String msg) &#123;</div><div class="line">     ToastUtil.showSingleShortToast(this,msg);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li><strong>登陆Token过期处理</strong></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public void showTokenInvalid(String code,String msg) &#123;</div><div class="line">      ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li><strong>不同页面状态下的显示处理</strong></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public void showLoadingView() &#123;</div><div class="line">     ...</div><div class="line">&#125;</div><div class="line">public void showGetDataError(String code,String msg) &#123;</div><div class="line">     ...</div><div class="line">&#125;</div><div class="line">public void showGetDataEmpty() &#123;</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li><strong>网络变化监听</strong></li>
+</ol>
+<p>由于几乎大部分页面Activity都会有网络请求，会对网络断开或者连接的时候，而且页面对数据及时性有要求的话，及时将网络变化告知给用户也很有必要。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);</div><div class="line">registerReceiver(new BroadcastReceiver() &#123;</div><div class="line">    @Override</div><div class="line">    public void onReceive(Context context, Intent intent) &#123;</div><div class="line">        if (!NetUtils.isConnnected(context)) &#123;</div><div class="line">            ...</div><div class="line">        &#125; else &#123;</div><div class="line">            ...</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;, filter);</div></pre></td></tr></table></figure>
+<ol>
+<li><strong>运行时的权限处理</strong></li>
+</ol>
+<p>如果我们将app的target Version 设置为26 及以上，我们在使用一些危险的权限时候，需要对运行时的权限进行处理。<br>如果我们自己多对，当然我们可以也选择其他的运行时的权限处理库（例如<a href="https://github.com/googlesamples/easypermissions" target="_blank" rel="external">easypermissions</a>）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">@Override</div><div class="line">protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">    super.onCreate(savedInstanceState);</div><div class="line">    checkAllNeedPermissions(getNeedPermissions());</div><div class="line">    ...</div><div class="line">&#125;</div><div class="line"></div><div class="line">/**</div><div class="line"> * 获取需要进行检测的权限数组</div><div class="line"> */</div><div class="line">protected void  checkAllNeedPermissions(String [] permissions);</div><div class="line"></div><div class="line">/**</div><div class="line"> * 获取需要进行检测的权限数组</div><div class="line"> */</div><div class="line">protected abstract String[] getNeedPermissions();</div><div class="line"></div><div class="line">/**</div><div class="line"> * 权限授权成功回调</div><div class="line"> */</div><div class="line">protected abstract void permissionGrantedSuccess();</div><div class="line"></div><div class="line">/**</div><div class="line"> * 权限授权失败回调</div><div class="line"> */</div><div class="line">protected abstract void permissionGrantedFail();</div></pre></td></tr></table></figure>
+<ol>
+<li><strong>一些常用的第三方库在使用中，亦可以进行自己的轻微封装操作</strong>，诸如</li>
+</ol>
+<ul>
+<li>使用Butterknife的处理</li>
+</ul>
+<p>使用Butterknife的时候，是有注册也必须要有反注册的机制，虽然可以右键一键生成，但是代码还是有可以复用的地方：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">protected void onCreate(@Nullable Bundle savedInstanceState) &#123;</div><div class="line">    super.onCreate(savedInstanceState);</div><div class="line">    setContentView(getLayout());</div><div class="line">    mUnBinder = ButterKnife.bind(this);</div><div class="line">     ...</div><div class="line">&#125;</div><div class="line">@Override</div><div class="line">protected void onDestroy() &#123;</div><div class="line">    super.onDestroy();</div><div class="line">    mUnBinder.unbind();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li><p>使用EveentBus的处理</p>
+<p>  使用EventBus的时候，是有注册也必须要有反注册的机制，因为Activity不是常驻内存的，Activity也有销毁的时候，这时候就需要从EventBus中“反注册”，可以在基类Activity声明周期方法中完成：</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">    super.onCreate(savedInstanceState);</div><div class="line">    ...</div><div class="line">    EventBus.getDefault().register(this);</div><div class="line">    ...</div><div class="line">&#125;</div><div class="line"></div><div class="line">@Override</div><div class="line">protected void onDestroy() &#123;</div><div class="line">    super.onDestroy();</div><div class="line">    ...</div><div class="line">    EventBus.getDefault().unregister(this);</div><div class="line">    ...</div><div class="line">&#125;</div><div class="line"></div><div class="line">public void onEventMainThread(BaseEvent event) &#123;</div><div class="line">    ...doSomething...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>虽然时间总线的使用可以松耦合，当由于过多使用事件总线的时候，代码将变的混乱不堪，阅读性变得很差 ，所以不是特别推荐在基类中做EventBus的处理，可以按需使用。</p>
+<ul>
+<li>MVP模式下的BaseActivity</li>
+</ul>
+</blockquote>
+<pre><code>基类activity 充当V层 ，会引用到Presenter,我们需要根据activity 来控制Presenter在内存中的情况，避免内存泄露。
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">protected void onCreate(@Nullable Bundle savedInstanceState) &#123;</div><div class="line">    super.onCreate(savedInstanceState);</div><div class="line">    setContentView(getLayout());</div><div class="line">  </div><div class="line">    initInject();</div><div class="line">    if (mPresenter != null) &#123;</div><div class="line">        mPresenter.attachView(this);</div><div class="line">    &#125;</div><div class="line">    initView();</div><div class="line">    initData(savedInstanceState);</div><div class="line">&#125;</div><div class="line"></div><div class="line">@Override</div><div class="line">protected void onDestroy() &#123;</div><div class="line">    super.onDestroy();</div><div class="line">    if (mPresenter != null) &#123;</div><div class="line">        mPresenter.detachView();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>加入Dagger 2 后的BaseActivity</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">protected ActivityComponent getActivityComponent()&#123;</div><div class="line">        return  DaggerActivityComponent.builder()</div><div class="line">                .appComponent(App.getAppComponent())</div><div class="line">                .activityModule(new ActivityModule(this))</div><div class="line">                .build();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // 初始化依赖注入</div><div class="line">    protected abstract void initInject();</div></pre></td></tr></table></figure>
+<p>鉴于每个人的编码风格习惯和具体APP的需求都是不同的，,一般我们不会把上面的逻辑全都加到基类中去，如果BaseActivity里的逻辑太多，会显得太重，代码也会产生功能冗余。上面总结的那些共有逻辑，也可以按需加入到BaseActivity中去</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/base/" rel="tag">#base</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/03/Arc 代码审查规范流程/" rel="next" title="Arc 代码审查规范流程">
+                <i class="fa fa-chevron-left"></i> Arc 代码审查规范流程
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/03/Android中透明状态栏全面解读/" rel="prev" title="Android设置透明状态栏相关">
+                Android设置透明状态栏相关 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2017/03/14/关于BaseActivty和BaseFragment的封装/"
+     data-title="浅谈BaseActivity的封装"
+     data-content=""
+     data-url="https://tomsbee8.github.io/2017/03/14/关于BaseActivty和BaseFragment的封装/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/03/14/关于BaseActivty和BaseFragment的封装/"
+           data-title="浅谈BaseActivity的封装" data-url="https://tomsbee8.github.io/2017/03/14/关于BaseActivty和BaseFragment的封装/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="ForNever" />
+          <p class="site-author-name" itemprop="name">ForNever</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/tomsbee8" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/tomsbee8" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.blinkdagger.cn/" title="BlinkDagger" target="_blank">BlinkDagger</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#浅谈BaseActivity的封装"><span class="nav-number">1.</span> <span class="nav-text">浅谈BaseActivity的封装</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ForNever</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye">本站总访问量</i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次</span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"tomsbeeb8"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("yFlqkDGE4eKycVSASbkIweCx-gzGzoHsz", "2YKb40MvU7bjnmfhaWCP0rCh");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>

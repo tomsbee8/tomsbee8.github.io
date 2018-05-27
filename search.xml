@@ -4,10 +4,45 @@
   
     
     <entry>
+      <title><![CDATA[初识Flutter]]></title>
+      <url>https://tomsbee8.github.io/2018/05/13/%E5%88%9D%E8%AF%86Flutter/</url>
+      <content type="html"><![CDATA[<h3 id="碎碎念"><a href="#碎碎念" class="headerlink" title="碎碎念"></a><strong>碎碎念</strong></h3><p>在年初的时候，先是看到google 重启dar2项目的消息，当时没有在意，然后不久在google 2018 IO大会上发布了beta3 版本后，才知道Flutter突然都这么火了。陆续在掘金上看到Flutter的文章。也陆续有开源中国版的Flutter版本和boss直聘的Flutter版本，才发现已经落伍了。然后在接下来的日子里，就像是发现了新大陆，沉迷Flutter日渐消瘦。搭建好安卓和iOS环境，然后开始翻阅文档，模仿着写写简单的例子。给我的感觉就是，虽然有好多基本库其实还不是那么强大，比方说json解析，HTTP请求等等，控件虽然不及Android/iOS控件丰富，但是每个widget控件都很精致，而且我觉得可以一套代码可以实现真正意义上的跨平台（对比RN和Weex）开发，真的是让人耳目一新，一颗赛艇。</p>
+<p>作为一名原生开发者，最近几年受到来自前端技术威胁的影响, 面对来势汹汹的即将一统江湖的js,我们常常调侃着饭碗都被前段抢了，因此会时常关注各种新技术, 也去由于项目原因，也了解熟悉Weex ,Vue等前端框架。</p>
+<h3 id="Flutter是什么"><a href="#Flutter是什么" class="headerlink" title="Flutter是什么"></a><strong>Flutter是什么</strong></h3><p>Flutter一种的新方式，Flutter 是一个允许我们去快速的，美观的去构建<strong>混合移动应用程序</strong>的<strong>移动端 SDK</strong> ，说白了，就是这样你就可以写一份代码，然后同时跑在 Android 和 iOS 上，构建高质量的原生用户界面。</p>
+<p>之所以说其真正的跨平台Flutter使用编译的编程语言即Dart的方法来避免JavaScript桥引起的性能问题,。 Dart被“提前编译”（AOT）编译成多个平台的本地代码。 这使得Flutter可以与平台进行通信，而无需通过执行了上下文切换的JavaScript Bridge。 编译为本机代码也可以提高应用程序的启动时间。</p>
+<h3 id="Flutter-对比React-Native-Weex"><a href="#Flutter-对比React-Native-Weex" class="headerlink" title="Flutter 对比React Native/Weex"></a><strong>Flutter 对比React Native/Weex</strong></h3><p>这两个平台在用户界面的构建方式差异上很大：</p>
+<ul>
+<li><p>React Native 和Weex最终是以原生的 iOS 或 Android 组件来渲染界面。在某些情况下，我们可以使用 <code>Native Module</code> 的方式来自定义组件，在 JS 端通过 <code>NativeModules</code> 来引用 Native 组件。</p>
+</li>
+<li><p>Flutter 是有自己专属的一套 <code>Widget</code>，并通过自身的高性能 C/C++ 渲染引擎来绘制界面。</p>
+</li>
+</ul>
+<h4 id="Flutter-的优势"><a href="#Flutter-的优势" class="headerlink" title="Flutter 的优势"></a><strong>Flutter 的优势</strong></h4><ol>
+<li><p>跨平台开发: 可以以独立于操作系统的方式轻松访问平台服务和硬件，如相机或摄像头等。</p>
+</li>
+<li><p>HotReLoad: 热加载功能，使得调试的体验相当好当程序代码更改时，可以自动执行 <code>Hot Reload</code> 操作，有点像Android的Instant功能。</p>
+</li>
+<li><p>丰富的UI 库（Material 及 Cupertino）。甚至可以设置不同平台的不同主题。</p>
+</li>
+</ol>
+<h4 id="我的感受"><a href="#我的感受" class="headerlink" title="我的感受"></a>我的感受</h4><ol>
+<li>文档挺完善，搭建好环境很容易，一个flutter doctor命令，用起来很顺，基本没遇到社么问题。</li>
+<li>dart学起来确实很容易上手，代码看起来还好，代码可读性在接受范围内，没有像网友叫嚣的那么差</li>
+<li>pub里的plugin 和package 比较少，很多原生中很容易实现（通过已经成熟的库）的功能，实现起来真费劲，比方说JSON解析。</li>
+<li>asset文件配置太过于自由，如果图片太多，管理起来很费劲(或许是我自己没找到其余的好的管理方法？).</li>
+</ol>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<li><a href="https://flutterchina.club/docs/" target="_blank" rel="external">Flutter中文文档</a></li>
+<li><a href="https://juejin.im/post/5a38e3f651882527a13d9eb2#heading-14" target="_blank" rel="external">什么是Flutter的革命</a></li>
+</ul>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[记录一次IM迁移流程]]></title>
       <url>https://tomsbee8.github.io/2018/03/03/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E7%AC%AC%E4%B8%89%E6%96%B9IM%E8%BF%81%E7%A7%BB%E6%B5%81%E7%A8%8B/</url>
       <content type="html"><![CDATA[<blockquote>
-<p>最近公司出于某些考虑打算更换第三方 IM 服务，我们 app 集成的是环信IM,打算更换为云星的SDK，而且 app 的现有用户量很大。刚好我一直在维护更新 IM 这个模块，然后前段时间 有小伙伴研究了我们 app 的 IM 服务架构迁移技术上的可行性，认为可行。现在呢，正准备实施转移了，虽然讨论了很多方案，我感觉工作量还是相当的大，复杂度还是比较高的。我们端上来协调工作，诸如：制定迁移流程，制定迁移消息协议等。我参与讨论很久，我对于IM的了解还算相对多一些。个人梳理的基本流程是：IM server 里拆解再组装用户和群组数据、App 端上复制本地消息数据、端上强制升级。</p>
+<p>最近公司出于某些考虑打算更换第三方 IM 服务，我们 app 集成的是环信IM,打算更换为云星的SDK，而且 app 的现有用户量很大。刚好我一直在维护更新 IM 这个模块，然后前段时间 有小伙伴研究了我们 app 的 IM 服务架构迁移技术上的可行性，认为可行。现在呢，正准备实施转移了，虽然讨论了很多方案，我感觉工作量还是相当的大，复杂度还是比较高的。我们端上来协调工作，诸如：制定迁移流程，制定迁移消息协议等。我参与讨论很久，我对于IM的了解还算相对多一些。个人梳理的基本流程是：IM server 里拆解再组装用户和群组数据、App 端上复制本地消息数据、端上强制升级。<br>    <a id="more"></a> </p>
 </blockquote>
 <h3 id="版本流程"><a href="#版本流程" class="headerlink" title="版本流程"></a>版本流程</h3><table>
 <thead>
@@ -20,7 +55,7 @@
 <tbody>
 <tr>
 <td>环信「使用」<br></td>
-<td>环信[不使用] 网易云信[使用]</td>
+<td>环信[不使用] <br> 网易云信[使用]</td>
 <td><br>网易云信[使用]</td>
 </tr>
 </tbody>
@@ -113,7 +148,7 @@
       <url>https://tomsbee8.github.io/2018/02/03/Android%E4%B8%AD%E9%80%8F%E6%98%8E%E7%8A%B6%E6%80%81%E6%A0%8F%E5%85%A8%E9%9D%A2%E8%A7%A3%E8%AF%BB/</url>
       <content type="html"><![CDATA[<p>StatusBar和NavigationBar适配详解</p>
 <hr>
-<h4 id="1-设置全屏"><a href="#1-设置全屏" class="headerlink" title="1.设置全屏"></a>1.设置全屏</h4><p>官方详细介绍：<a href="https://developer.android.com/design/patterns/fullscreen.html#immersive" target="_blank" rel="external">Immersive</a><br>官方示例：<a href="https://github.com/googlesamples/android-AdvancedImmersiveMode" target="_blank" rel="external">sample</a></p>
+<h4 id="1-设置全屏"><a href="#1-设置全屏" class="headerlink" title="1.设置全屏"></a>1.设置全屏</h4><p>官方详细介绍：<a href="https://developer.android.com/design/patterns/fullscreen.html#immersive" target="_blank" rel="external">Immersive</a><br>官方示例：<a href="https://github.com/googlesamples/android-AdvancedImmersiveMode" target="_blank" rel="external">sample</a><br>    <a id="more"></a></p>
 <h6 id="SystemUIFlag详解"><a href="#SystemUIFlag详解" class="headerlink" title="SystemUIFlag详解"></a>SystemUIFlag详解</h6><table>
 <thead>
 <tr>
@@ -131,7 +166,7 @@
 <tr>
 <td>SYSTEM_UI_FLAG_FULLSCREEN</td>
 <td>Layout全屏显示，且状态栏会被隐藏覆盖</td>
-<td>等同于（WindowManager.LayoutParams.FLAG_FULLSCREEN）大多时候我们会在splash闪屏页使用</td>
+<td>等同于WindowManager.LayoutParame的FLAG_FULLSCREEN，大多时候我们会在splash闪屏页使用</td>
 </tr>
 <tr>
 <td>SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN</td>
@@ -186,7 +221,10 @@
 </tr>
 </tbody>
 </table>
-<h4 id="2-设置透明状态栏"><a href="#2-设置透明状态栏" class="headerlink" title="2. 设置透明状态栏"></a>2. 设置透明状态栏</h4><p>Android 系统从4.4开始支持透明状态栏,效果在 4.4.x 和 5.x 上表现不同，4.4.x 是一层渐变的遮罩层；5.x 以上是一条半透明的遮罩层。</p>
+<p>#### </p>
+<ol>
+<li>设置透明状态栏<br>Android 系统从4.4开始支持透明状态栏,效果在 4.4.x 和 5.x 上表现不同，4.4.x 是一层渐变的遮罩层；5.x 以上是一条半透明的遮罩层。</li>
+</ol>
 <ul>
 <li>通过theme 设置：</li>
 </ul>
@@ -195,10 +233,9 @@
      &lt;item name=&quot;android:windowTranslucentStatus&quot;&gt;true&lt;/item&gt;
 &lt;/style&gt;
 </code></pre><ul>
-<li><p>通过代码设置：</p>
-<p>   activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);</p>
-</li>
+<li>通过代码设置：</li>
 </ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);</div></pre></td></tr></table></figure>
 <p>设置完毕后，还需要给layout 设置fitsSystemWindows属性为true，系统就会调整该view的padding值来留出空间给系统窗体。表现为，padding出status bar的高度给status bar使用，不至于我们定义layout跟status bar重叠！<br>这是因为fitsSystemWindows属性使得布局的paddingTop被重新改写了（paddingTop增加了状态栏的高度）。也可以通过代码来设置，需要在setContentView()方法 之后添加(代码来自<a href="https://www.jianshu.com/p/0acc12c29c1b" target="_blank" rel="external">这里</a>)</p>
 <pre><code>ViewGroup contentFrameLayout = (ViewGroup) findViewById(Window.ID_ANDROID_CONTENT);
     View parentView = contentFrameLayout.getChildAt(0);
@@ -332,6 +369,83 @@ private static void setFlymeStatusBarDarkMode(@NonNull Activity activity, boolea
     </entry>
     
     <entry>
+      <title><![CDATA[浅谈BaseActivity的封装]]></title>
+      <url>https://tomsbee8.github.io/2017/03/14/%E5%85%B3%E4%BA%8EBaseActivty%E5%92%8CBaseFragment%E7%9A%84%E5%B0%81%E8%A3%85/</url>
+      <content type="html"><![CDATA[<h2 id="浅谈BaseActivity的封装"><a href="#浅谈BaseActivity的封装" class="headerlink" title="浅谈BaseActivity的封装"></a>浅谈BaseActivity的封装</h2><p>在项目中，我们在使用Activity和fragment的时候一般会在基类里封装一些共有的逻辑，每个人可能都有不同封装思路，考虑的逻辑也会不同。这些共有的逻辑有很多,下面就来总结下我们通常会考虑的一些封装内容。</p>
+<ol>
+<li><strong>状态栏，底部导航栏设置</strong><br>系统从4.4开始支持透明状态栏,效果在不同版本上表现不同，实现方式主要有设置主题style 和在activity中手动设置需要对每个Activity进行适配。现在的App大多都对状态栏进行适配。这些都是一些相同的逻辑：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">    super.onCreate(savedInstanceState);</div><div class="line">    setStatusBar();</div><div class="line">    ...</div><div class="line">&#125;</div><div class="line"> protected void setStatusBar() &#123;</div><div class="line">   SystemBarUtil.setTranslucentStatusBar(this,true);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其中SystemBarUtil的封装参见我的 SystemBarUtil</p>
+<ol>
+<li><strong>共有的控件，如toolbar或者自定义的titleBar</strong> <a id="more"></a>
+Toolbar作为谷歌推荐的标题栏控件,其使用很普遍，当然也有人喜欢自定义布局作为标题栏（此处不另外写例子）。如<br>果在每个Activity里面都写一个Toolbar的话，显然有点冗余，一般情况下在BaseActivity封装好Toolbar，在子类用BaseActivity提供的方法调用即可。<br>先是基类的layout文件：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">&lt;android.support.constraint.ConstraintLayout</div><div class="line">    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</div><div class="line">    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;</div><div class="line">    android:layout_width=&quot;match_parent&quot;</div><div class="line">    android:layout_height=&quot;match_parent&quot;&gt;</div><div class="line"></div><div class="line">    &lt;android.support.v7.widget.Toolbar</div><div class="line">        android:id=&quot;@+id/common_tb&quot;</div><div class="line">        android:layout_width=&quot;match_parent&quot;</div><div class="line">        android:layout_height=&quot;56dp&quot;</div><div class="line">        android:background=&quot;@color/main_color&quot;</div><div class="line">        app:layout_constraintTop_toTopOf=&quot;parent&quot;</div><div class="line">        app:layout_collapseMode=&quot;pin&quot;</div><div class="line">        app:popupTheme=&quot;@style/ThemeOverlay.AppCompat.Light&quot;&gt;</div><div class="line"></div><div class="line">        &lt;TextView</div><div class="line">            android:id=&quot;@+id/common_center_tv&quot;</div><div class="line">            android:layout_width=&quot;wrap_content&quot;</div><div class="line">            android:layout_height=&quot;wrap_content&quot;</div><div class="line">            android:layout_gravity=&quot;center&quot;</div><div class="line">            android:singleLine=&quot;true&quot;</div><div class="line">            android:textSize=&quot;15sp&quot;</div><div class="line">            android:text=&quot;标题&quot;</div><div class="line">            android:textColor=&quot;@android:color/white&quot; /&gt;</div><div class="line">    &lt;/android.support.v7.widget.Toolbar&gt;</div><div class="line"></div><div class="line">    &lt;RelativeLayout</div><div class="line">        android:id=&quot;@+id/common_content_rl&quot;</div><div class="line">        android:layout_width=&quot;match_parent&quot;</div><div class="line">        android:layout_height=&quot;0dp&quot;</div><div class="line">        app:layout_constraintTop_toBottomOf=&quot;@+id/common_tb&quot;</div><div class="line">        app:layout_constraintBottom_toBottomOf=&quot;parent&quot;&gt;</div><div class="line"></div><div class="line">    &lt;/RelativeLayout&gt;</div><div class="line"></div><div class="line">&lt;/android.support.constraint.ConstraintLayout&gt;</div></pre></td></tr></table></figure>
+<p>然后是基类中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line">public abstract class BaseActivity extends AppCompatActivity &#123;</div><div class="line"></div><div class="line">    private Toolbar mToolbar;</div><div class="line">    private RelativeLayout mContentRL;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onCreate(@Nullable Bundle savedInstanceState) &#123;</div><div class="line">        super.onCreate(savedInstanceState);</div><div class="line">        setContentView(getContentLayout());</div><div class="line">        setToolBar();</div><div class="line">        initView();</div><div class="line">        initData();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onNewIntent(Intent intent) &#123;</div><div class="line">        super.onNewIntent(intent);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    protected abstract @LayoutRes int getLayout();</div><div class="line"></div><div class="line">    protected @LayoutRes int getContentLayout()&#123;</div><div class="line">        if(useToolbar())&#123;</div><div class="line">            return R.layout.common_toolbar_container;</div><div class="line">        &#125;else&#123;</div><div class="line">            return getLayout();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    protected abstract boolean useToolbar();</div><div class="line"></div><div class="line">    protected abstract void initView();</div><div class="line"></div><div class="line">    protected abstract void initData();</div><div class="line"></div><div class="line">    protected void setToolBar()&#123;</div><div class="line">        mToolbar = (Toolbar) findViewById(R.id.common_tb);</div><div class="line">        setSupportActionBar(mToolbar);</div><div class="line">        android.support.v7.app.ActionBar actionBar = getSupportActionBar();</div><div class="line">        if (actionBar != null)&#123;</div><div class="line">            actionBar.setDisplayHomeAsUpEnabled(true);</div><div class="line">            actionBar.setDisplayShowTitleEnabled(false);</div><div class="line">        &#125;</div><div class="line">        mContentRL = (RelativeLayout) findViewById(R.id.common_content_rl);</div><div class="line">        if(useToolbar())&#123;</div><div class="line">            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);</div><div class="line">            View contentView = inflater.inflate(getLayout(), null);</div><div class="line">            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,</div><div class="line">                    ViewGroup.LayoutParams.MATCH_PARENT);</div><div class="line">            mContentRL.addView(contentView, params);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li><strong>基本生命周期以及第三方统计</strong></li>
+</ol>
+<p>用过友盟数据统计的同学应该知道，为了统计每个页面的点击事件，页面访问路径，异常信息等我们需要在Activity的生命周期方法中添加友盟的API，这些都是一些相同的逻辑，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">protected void onResume() &#123;</div><div class="line">    MobclickAgent.onResume(this);</div><div class="line">&#125;</div><div class="line"></div><div class="line">@Override</div><div class="line">protected void onPause() &#123;</div><div class="line">    MobclickAgent.onPause(this);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li><strong>进出场动画效果</strong></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">@Override</div><div class="line">protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">    super.onCreate(savedInstanceState);</div><div class="line">    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);</div><div class="line">    ...</div><div class="line">&#125;</div><div class="line">@Override</div><div class="line">public void finish() &#123;</div><div class="line">    super.finish();</div><div class="line">    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li><strong>定义一些共有的UI操作，例如toast,popupWindow,snackbar,dialog</strong></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public void showLoadingPregoress() &#123;</div><div class="line">     ...</div><div class="line">&#125;</div><div class="line">public void showLoadingDialog() &#123;</div><div class="line">     ...</div><div class="line">&#125;</div><div class="line">public void showLoadingDialog(String msg) &#123;</div><div class="line">     ToastUtil.showSingleShortToast(this,msg);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li><strong>登陆Token过期处理</strong></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public void showTokenInvalid(String code,String msg) &#123;</div><div class="line">      ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li><strong>不同页面状态下的显示处理</strong></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public void showLoadingView() &#123;</div><div class="line">     ...</div><div class="line">&#125;</div><div class="line">public void showGetDataError(String code,String msg) &#123;</div><div class="line">     ...</div><div class="line">&#125;</div><div class="line">public void showGetDataEmpty() &#123;</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li><strong>网络变化监听</strong></li>
+</ol>
+<p>由于几乎大部分页面Activity都会有网络请求，会对网络断开或者连接的时候，而且页面对数据及时性有要求的话，及时将网络变化告知给用户也很有必要。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);</div><div class="line">registerReceiver(new BroadcastReceiver() &#123;</div><div class="line">    @Override</div><div class="line">    public void onReceive(Context context, Intent intent) &#123;</div><div class="line">        if (!NetUtils.isConnnected(context)) &#123;</div><div class="line">            ...</div><div class="line">        &#125; else &#123;</div><div class="line">            ...</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;, filter);</div></pre></td></tr></table></figure>
+<ol>
+<li><strong>运行时的权限处理</strong></li>
+</ol>
+<p>如果我们将app的target Version 设置为26 及以上，我们在使用一些危险的权限时候，需要对运行时的权限进行处理。<br>如果我们自己多对，当然我们可以也选择其他的运行时的权限处理库（例如<a href="https://github.com/googlesamples/easypermissions" target="_blank" rel="external">easypermissions</a>）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">@Override</div><div class="line">protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">    super.onCreate(savedInstanceState);</div><div class="line">    checkAllNeedPermissions(getNeedPermissions());</div><div class="line">    ...</div><div class="line">&#125;</div><div class="line"></div><div class="line">/**</div><div class="line"> * 获取需要进行检测的权限数组</div><div class="line"> */</div><div class="line">protected void  checkAllNeedPermissions(String [] permissions);</div><div class="line"></div><div class="line">/**</div><div class="line"> * 获取需要进行检测的权限数组</div><div class="line"> */</div><div class="line">protected abstract String[] getNeedPermissions();</div><div class="line"></div><div class="line">/**</div><div class="line"> * 权限授权成功回调</div><div class="line"> */</div><div class="line">protected abstract void permissionGrantedSuccess();</div><div class="line"></div><div class="line">/**</div><div class="line"> * 权限授权失败回调</div><div class="line"> */</div><div class="line">protected abstract void permissionGrantedFail();</div></pre></td></tr></table></figure>
+<ol>
+<li><strong>一些常用的第三方库在使用中，亦可以进行自己的轻微封装操作</strong>，诸如</li>
+</ol>
+<ul>
+<li>使用Butterknife的处理</li>
+</ul>
+<p>使用Butterknife的时候，是有注册也必须要有反注册的机制，虽然可以右键一键生成，但是代码还是有可以复用的地方：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">protected void onCreate(@Nullable Bundle savedInstanceState) &#123;</div><div class="line">    super.onCreate(savedInstanceState);</div><div class="line">    setContentView(getLayout());</div><div class="line">    mUnBinder = ButterKnife.bind(this);</div><div class="line">     ...</div><div class="line">&#125;</div><div class="line">@Override</div><div class="line">protected void onDestroy() &#123;</div><div class="line">    super.onDestroy();</div><div class="line">    mUnBinder.unbind();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li><p>使用EveentBus的处理</p>
+<p>  使用EventBus的时候，是有注册也必须要有反注册的机制，因为Activity不是常驻内存的，Activity也有销毁的时候，这时候就需要从EventBus中“反注册”，可以在基类Activity声明周期方法中完成：</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">    super.onCreate(savedInstanceState);</div><div class="line">    ...</div><div class="line">    EventBus.getDefault().register(this);</div><div class="line">    ...</div><div class="line">&#125;</div><div class="line"></div><div class="line">@Override</div><div class="line">protected void onDestroy() &#123;</div><div class="line">    super.onDestroy();</div><div class="line">    ...</div><div class="line">    EventBus.getDefault().unregister(this);</div><div class="line">    ...</div><div class="line">&#125;</div><div class="line"></div><div class="line">public void onEventMainThread(BaseEvent event) &#123;</div><div class="line">    ...doSomething...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>虽然时间总线的使用可以松耦合，当由于过多使用事件总线的时候，代码将变的混乱不堪，阅读性变得很差 ，所以不是特别推荐在基类中做EventBus的处理，可以按需使用。</p>
+<ul>
+<li>MVP模式下的BaseActivity</li>
+</ul>
+</blockquote>
+<pre><code>基类activity 充当V层 ，会引用到Presenter,我们需要根据activity 来控制Presenter在内存中的情况，避免内存泄露。
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">protected void onCreate(@Nullable Bundle savedInstanceState) &#123;</div><div class="line">    super.onCreate(savedInstanceState);</div><div class="line">    setContentView(getLayout());</div><div class="line">  </div><div class="line">    initInject();</div><div class="line">    if (mPresenter != null) &#123;</div><div class="line">        mPresenter.attachView(this);</div><div class="line">    &#125;</div><div class="line">    initView();</div><div class="line">    initData(savedInstanceState);</div><div class="line">&#125;</div><div class="line"></div><div class="line">@Override</div><div class="line">protected void onDestroy() &#123;</div><div class="line">    super.onDestroy();</div><div class="line">    if (mPresenter != null) &#123;</div><div class="line">        mPresenter.detachView();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>加入Dagger 2 后的BaseActivity</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">protected ActivityComponent getActivityComponent()&#123;</div><div class="line">        return  DaggerActivityComponent.builder()</div><div class="line">                .appComponent(App.getAppComponent())</div><div class="line">                .activityModule(new ActivityModule(this))</div><div class="line">                .build();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // 初始化依赖注入</div><div class="line">    protected abstract void initInject();</div></pre></td></tr></table></figure>
+<p>鉴于每个人的编码风格习惯和具体APP的需求都是不同的，,一般我们不会把上面的逻辑全都加到基类中去，如果BaseActivity里的逻辑太多，会显得太重，代码也会产生功能冗余。上面总结的那些共有逻辑，也可以按需加入到BaseActivity中去</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[Arc 代码审查规范流程]]></title>
       <url>https://tomsbee8.github.io/2017/01/03/Arc%20%E4%BB%A3%E7%A0%81%E5%AE%A1%E6%9F%A5%E8%A7%84%E8%8C%83%E6%B5%81%E7%A8%8B/</url>
       <content type="html"><![CDATA[<h5 id="Arc-代码审查规范流程"><a href="#Arc-代码审查规范流程" class="headerlink" title="Arc 代码审查规范流程"></a>Arc 代码审查规范流程</h5><p>我们认为CodeReview代码审查的直接作用就是规范代码习惯、找出潜在缺陷、BUG，优化代码设计，对产品质量进行把关。对于码农来说也是有好处的，可以促进工程师日常代码交流和帮助个人的成长。</p>
@@ -339,7 +453,8 @@ private static void setFlymeStatusBarDarkMode(@NonNull Activity activity, boolea
 <h5 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h5><ol>
 <li>从主干上面切换到此开发分支：git checkout   develop</li>
 <li>提交信息git commit -m “xxxMessage”</li>
-<li>提交与远端develop分支的差异revision：arc diff origin/develop</li>
+<li>提交与远端develop分支的差异revision：arc diff origin/develop  <a id="more"></a> 
+</li>
 </ol>
 <blockquote>
 <p>Attention: 如果当前分支已经有未推送的revision,将会update revision,而不会产生新的revision，如果需要另加revision，可以使用：arc diff –create origin/develop</p>

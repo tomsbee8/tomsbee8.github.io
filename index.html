@@ -278,6 +278,163 @@
             
               
                 
+                <a class="post-title-link" href="/2018/05/13/初识Flutter/" itemprop="url">
+                  初识Flutter
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-05-13T12:38:33+08:00" content="2018-05-13">
+              2018-05-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Flutter/" itemprop="url" rel="index">
+                    <span itemprop="name">Flutter</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2018/05/13/初识Flutter/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/05/13/初识Flutter/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2018/05/13/初识Flutter/" class="leancloud_visitors" data-flag-title="初识Flutter">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="碎碎念"><a href="#碎碎念" class="headerlink" title="碎碎念"></a><strong>碎碎念</strong></h3><p>在年初的时候，先是看到google 重启dar2项目的消息，当时没有在意，然后不久在google 2018 IO大会上发布了beta3 版本后，才知道Flutter突然都这么火了。陆续在掘金上看到Flutter的文章。也陆续有开源中国版的Flutter版本和boss直聘的Flutter版本，才发现已经落伍了。然后在接下来的日子里，就像是发现了新大陆，沉迷Flutter日渐消瘦。搭建好安卓和iOS环境，然后开始翻阅文档，模仿着写写简单的例子。给我的感觉就是，虽然有好多基本库其实还不是那么强大，比方说json解析，HTTP请求等等，控件虽然不及Android/iOS控件丰富，但是每个widget控件都很精致，而且我觉得可以一套代码可以实现真正意义上的跨平台（对比RN和Weex）开发，真的是让人耳目一新，一颗赛艇。</p>
+<p>作为一名原生开发者，最近几年受到来自前端技术威胁的影响, 面对来势汹汹的即将一统江湖的js,我们常常调侃着饭碗都被前段抢了，因此会时常关注各种新技术, 也去由于项目原因，也了解熟悉Weex ,Vue等前端框架。</p>
+<h3 id="Flutter是什么"><a href="#Flutter是什么" class="headerlink" title="Flutter是什么"></a><strong>Flutter是什么</strong></h3><p>Flutter一种的新方式，Flutter 是一个允许我们去快速的，美观的去构建<strong>混合移动应用程序</strong>的<strong>移动端 SDK</strong> ，说白了，就是这样你就可以写一份代码，然后同时跑在 Android 和 iOS 上，构建高质量的原生用户界面。</p>
+<p>之所以说其真正的跨平台Flutter使用编译的编程语言即Dart的方法来避免JavaScript桥引起的性能问题,。 Dart被“提前编译”（AOT）编译成多个平台的本地代码。 这使得Flutter可以与平台进行通信，而无需通过执行了上下文切换的JavaScript Bridge。 编译为本机代码也可以提高应用程序的启动时间。</p>
+<h3 id="Flutter-对比React-Native-Weex"><a href="#Flutter-对比React-Native-Weex" class="headerlink" title="Flutter 对比React Native/Weex"></a><strong>Flutter 对比React Native/Weex</strong></h3><p>这两个平台在用户界面的构建方式差异上很大：</p>
+<ul>
+<li><p>React Native 和Weex最终是以原生的 iOS 或 Android 组件来渲染界面。在某些情况下，我们可以使用 <code>Native Module</code> 的方式来自定义组件，在 JS 端通过 <code>NativeModules</code> 来引用 Native 组件。</p>
+</li>
+<li><p>Flutter 是有自己专属的一套 <code>Widget</code>，并通过自身的高性能 C/C++ 渲染引擎来绘制界面。</p>
+</li>
+</ul>
+<h4 id="Flutter-的优势"><a href="#Flutter-的优势" class="headerlink" title="Flutter 的优势"></a><strong>Flutter 的优势</strong></h4><ol>
+<li><p>跨平台开发: 可以以独立于操作系统的方式轻松访问平台服务和硬件，如相机或摄像头等。</p>
+</li>
+<li><p>HotReLoad: 热加载功能，使得调试的体验相当好当程序代码更改时，可以自动执行 <code>Hot Reload</code> 操作，有点像Android的Instant功能。</p>
+</li>
+<li><p>丰富的UI 库（Material 及 Cupertino）。甚至可以设置不同平台的不同主题。</p>
+</li>
+</ol>
+<h4 id="我的感受"><a href="#我的感受" class="headerlink" title="我的感受"></a>我的感受</h4><ol>
+<li>文档挺完善，搭建好环境很容易，一个flutter doctor命令，用起来很顺，基本没遇到社么问题。</li>
+<li>dart学起来确实很容易上手，代码看起来还好，代码可读性在接受范围内，没有像网友叫嚣的那么差</li>
+<li>pub里的plugin 和package 比较少，很多原生中很容易实现（通过已经成熟的库）的功能，实现起来真费劲，比方说JSON解析。</li>
+<li>asset文件配置太过于自由，如果图片太多，管理起来很费劲(或许是我自己没找到其余的好的管理方法？).</li>
+</ol>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<li><a href="https://flutterchina.club/docs/" target="_blank" rel="external">Flutter中文文档</a></li>
+<li><a href="https://juejin.im/post/5a38e3f651882527a13d9eb2#heading-14" target="_blank" rel="external">什么是Flutter的革命</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2018/03/03/记录一次第三方IM迁移流程/" itemprop="url">
                   记录一次IM迁移流程
                 </a>
@@ -306,8 +463,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/others/" itemprop="url" rel="index">
-                    <span itemprop="name">others</span>
+                  <a href="/categories/Others/" itemprop="url" rel="index">
+                    <span itemprop="name">Others</span>
                   </a>
                 </span>
 
@@ -356,108 +513,13 @@
 
       
         
-          
-            <blockquote>
-<p>最近公司出于某些考虑打算更换第三方 IM 服务，我们 app 集成的是环信IM,打算更换为云星的SDK，而且 app 的现有用户量很大。刚好我一直在维护更新 IM 这个模块，然后前段时间 有小伙伴研究了我们 app 的 IM 服务架构迁移技术上的可行性，认为可行。现在呢，正准备实施转移了，虽然讨论了很多方案，我感觉工作量还是相当的大，复杂度还是比较高的。我们端上来协调工作，诸如：制定迁移流程，制定迁移消息协议等。我参与讨论很久，我对于IM的了解还算相对多一些。个人梳理的基本流程是：IM server 里拆解再组装用户和群组数据、App 端上复制本地消息数据、端上强制升级。</p>
-</blockquote>
-<h3 id="版本流程"><a href="#版本流程" class="headerlink" title="版本流程"></a>版本流程</h3><table>
-<thead>
-<tr>
-<th>V4.5【最初版本】</th>
-<th>V4.6【过渡版本】</th>
-<th>V4.7【最终版本】</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>环信「使用」<br></td>
-<td>环信[不使用] 网易云信[使用]</td>
-<td><br>网易云信[使用]</td>
-</tr>
-</tbody>
-</table>
-<h3 id="升级说明："><a href="#升级说明：" class="headerlink" title="升级说明："></a>升级说明：</h3><ul>
-<li><strong>V4.5 —&gt;  V4.6</strong>:为强制升级【也就是说，当4.6版本发布后，视为所有用户为4.6版本】<br>升级后，所有会话使用网易云信通道进行聊天，环信存在的意义在于提供数据复制转移。<br><strong>对于新用户</strong>：注册的时候，只会在网易云信上添加新用户。<br><strong>对于老用户</strong>：用户信息需在升级之前在网易云服务端建立。环信登录后，会进行app端上的本地<strong>数据复制转移</strong>，<br><strong>对于已经存在的群组</strong>：群组需在升级之前在网易云服务端建立。<br><strong>对于新建的群组</strong>：新建群组的时候，只会在网易云信上添加新的群组.</li>
-<li><strong>V4.6 —&gt;  V4.7</strong>:不强制升级，升级后只是去除了环信的冗余包和数据</li>
-</ul>
-<h3 id="数据拆解再组装-："><a href="#数据拆解再组装-：" class="headerlink" title="数据拆解再组装 ："></a>数据拆解再组装 ：</h3><ol>
-<li><strong>网易云信Server</strong>: 需要复制用户信息，复制群组信息，实现方式是：在appServer调用环信服务API获取用户信息及群组信息，然后拆解后组装，最后通过调用网易云信服务端API批量创建。</li>
-</ol>
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>备注</th>
-<th>API操作文档链接</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>环信批量获取用户信息</td>
-<td>需要多次请求多页数据才能全部完成操作</td>
-<td><a href="http://docs.easemob.com/im/100serverintegration/20users" target="_blank" rel="external">获取IM用户【批量】</a></td>
-</tr>
-<tr>
-<td>环信批量获取群组信息</td>
-<td>需要多次请求多页数据才能全部操作完成</td>
-<td><a href="http://docs.easemob.com/im/100serverintegration/60groupmgmt" target="_blank" rel="external">分页获取app下的群组</a></td>
-</tr>
-<tr>
-<td>网易云信添加用户</td>
-<td>不支持批量添加，一次API调用只添加一个</td>
-<td><a href="http://dev.netease.im/docs/product/IM%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AF/%E6%9C%8D%E5%8A%A1%E7%AB%AFAPI%E6%96%87%E6%A1%A3/%E7%BD%91%E6%98%93%E4%BA%91%E9%80%9A%E4%BF%A1ID?#%E5%88%9B%E5%BB%BA%E7%BD%91%E6%98%93%E4%BA%91%E9%80%9A%E4%BF%A1ID" target="_blank" rel="external">创建网易云通信ID</a></td>
-</tr>
-<tr>
-<td>网易云信添加群组</td>
-<td>不支持批量添加，一次API调用只添加一个</td>
-<td><a href="http://dev.netease.im/docs/product/IM%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AF/%E6%9C%8D%E5%8A%A1%E7%AB%AFAPI%E6%96%87%E6%A1%A3/%E7%BE%A4%E7%BB%84%E5%8A%9F%E8%83%BD%EF%BC%88%E9%AB%98%E7%BA%A7%E7%BE%A4%EF%BC%89?#%E5%88%9B%E5%BB%BA%E7%BE%A4" target="_blank" rel="external">创建群</a></td>
-</tr>
-</tbody>
-</table>
-<ol>
-<li><strong>APP端</strong>: 复制本地会话消息,会话的本质还是消息，有了历史消息数据，云信SDK就可以提供会话。所以在端上只需要提供消息的拆解和组装即可。<br>| 操作 | 备注 | 操作文档连接 |<br>| — | — | — |<br>| 环信Android本地消息获取 | 先获取会话列表，然后根据获取会话的历史记录 | [获取聊天记录] (<a href="http://docs.easemob.com/im/200androidclientintegration/50singlechat" target="_blank" rel="external">http://docs.easemob.com/im/200androidclientintegration/50singlechat</a>) |<br>环信iOS本地消息获取 | 先获取会话列表，然后根据获取会话的历史记录 | <a href="http://docs.easemob.com/im/300iosclientintegration/40emmsg" target="_blank" rel="external">消息-&gt;消息检索</a><br>网易云信Android 本地消息插入 | 保存消息到本地数据库，但不发送到服务器端 | <a href="http://dev.netease.im/docs/product/IM%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AF/SDK%E5%BC%80%E5%8F%91%E9%9B%86%E6%88%90/Android%E5%BC%80%E5%8F%91%E9%9B%86%E6%88%90/%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95?#%E6%8F%92%E5%85%A5%E6%9C%AC%E5%9C%B0%E6%B6%88%E6%81%AF" target="_blank" rel="external">历史记录–&gt;插入本地消息</a><br>网易云信iOS本地消息插入 |保存消息到本地数据库，但不发送到服务器端，仅仅支持文本消息、提醒消息、自定义消息 | <a href="http://dev.netease.im/docs/product/IM%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AF/SDK%E5%BC%80%E5%8F%91%E9%9B%86%E6%88%90/iOS%E5%BC%80%E5%8F%91%E9%9B%86%E6%88%90/%E6%9C%80%E8%BF%91%E4%BC%9A%E8%AF%9D" target="_blank" rel="external">写入本地消息</a></li>
-</ol>
-<h3 id="聊天交互相关的页面"><a href="#聊天交互相关的页面" class="headerlink" title="聊天交互相关的页面"></a>聊天交互相关的页面</h3><table>
-<thead>
-<tr>
-<th>页面</th>
-<th>相关操作 </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> Application</td>
-<td>IM SDK初始化「全局消息通知方式初始化等」 </td>
-</tr>
-<tr>
-<td>注册登录页面</td>
-<td>登录app Server完成后进行环信登录，登录完成后加载本地会话和群组到内存中</td>
-<td></td>
-</tr>
-<tr>
-<td>闪屏页面</td>
-<td>登录完成后加载本地会话和群组到内存中 </td>
-</tr>
-<tr>
-<td>主页面</td>
-<td>监听环信连接相关Listener（断开，连接，被踢）<br> 监听群组Listener()<br> 监听环信消息Listener(监听新消息)</td>
-</tr>
-<tr>
-<td>消息会话页面</td>
-<td>读取会话列表并展现 </td>
-</tr>
-<tr>
-<td>聊天页面</td>
-<td>读取本地记录，接收消息，发送消息 </td>
-</tr>
-<tr>
-<td>设置页面</td>
-<td>退出时断开环信连接 </td>
-</tr>
-</tbody>
-</table>
-
-          
+          <blockquote>
+<p>最近公司出于某些考虑打算更换第三方 IM 服务，我们 app 集成的是环信IM,打算更换为云星的SDK，而且 app 的现有用户量很大。刚好我一直在维护更新 IM 这个模块，然后前段时间 有小伙伴研究了我们 app 的 IM 服务架构迁移技术上的可行性，认为可行。现在呢，正准备实施转移了，虽然讨论了很多方案，我感觉工作量还是相当的大，复杂度还是比较高的。我们端上来协调工作，诸如：制定迁移流程，制定迁移消息协议等。我参与讨论很久，我对于IM的了解还算相对多一些。个人梳理的基本流程是：IM server 里拆解再组装用户和群组数据、App 端上复制本地消息数据、端上强制升级。<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2018/03/03/记录一次第三方IM迁移流程/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -583,226 +645,152 @@
 
       
         
-          
-            <p>StatusBar和NavigationBar适配详解</p>
+          <p>StatusBar和NavigationBar适配详解</p>
 <hr>
-<h4 id="1-设置全屏"><a href="#1-设置全屏" class="headerlink" title="1.设置全屏"></a>1.设置全屏</h4><p>官方详细介绍：<a href="https://developer.android.com/design/patterns/fullscreen.html#immersive" target="_blank" rel="external">Immersive</a><br>官方示例：<a href="https://github.com/googlesamples/android-AdvancedImmersiveMode" target="_blank" rel="external">sample</a></p>
-<h6 id="SystemUIFlag详解"><a href="#SystemUIFlag详解" class="headerlink" title="SystemUIFlag详解"></a>SystemUIFlag详解</h6><table>
-<thead>
-<tr>
-<th>Flag</th>
-<th>含义</th>
-<th>详细解释</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>SYSTEM_UI_FLAG_LOW_PROFILE</td>
-<td>低能显示状态</td>
-<td>状态栏显示处于低能显示状态(low profile模式)，状态栏上一些图标显示会被隐藏。</td>
-</tr>
-<tr>
-<td>SYSTEM_UI_FLAG_FULLSCREEN</td>
-<td>Layout全屏显示，且状态栏会被隐藏覆盖</td>
-<td>等同于（WindowManager.LayoutParams.FLAG_FULLSCREEN）大多时候我们会在splash闪屏页使用</td>
-</tr>
-<tr>
-<td>SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN</td>
-<td>Layout全屏显示，但是状态栏会被覆盖但是不会隐藏</td>
-<td>大多时候我们会同时设置状态栏透明</td>
-</tr>
-<tr>
-<td>SYSTEM_UI_FLAG_HIDE_NAVIGATION</td>
-<td>隐藏虚拟导航栏</td>
-<td></td>
-</tr>
-<tr>
-<td>SYSTEM_UI_FLAG_IMMERSIVE</td>
-<td>沉浸模式</td>
-<td></td>
-</tr>
-<tr>
-<td>SYSTEM_UI_FLAG_IMMERSIVE_STICKY</td>
-<td>Sticky的沉浸模式</td>
-<td></td>
-</tr>
-<tr>
-<td>SYSTEM_UI_FLAG_LAYOUT_STABLE</td>
-<td>提高UI稳定</td>
-<td>保持Layout不变，隐藏状态栏或者导航栏后，View不会拉伸。</td>
-</tr>
-</tbody>
-</table>
-<h6 id="全屏模式细分："><a href="#全屏模式细分：" class="headerlink" title="全屏模式细分："></a>全屏模式细分：</h6><table>
-<thead>
-<tr>
-<th>模式</th>
-<th>包含的Flag</th>
-<th>特点</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>leanbackMode</td>
-<td>SYSTEM_UI_FLAG_FULLSCREEN、SYSTEM_UI_FLAG_HIDE_NAVIGATION</td>
-<td>点击屏幕任意地方都会退出全屏模式</td>
-</tr>
-<tr>
-<td>ImmersiveMode</td>
-<td>SYSTEM_UI_FLAG_FULLSCREEN、SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN、SYSTEM_UI_FLAG_HIDE_NAVIGATION、SYSTEM_UI_FLAG_IMMERSIVE</td>
-<td>点击屏幕不会退出全屏，从状态栏或者导航栏滑动到内容区域会退出全屏模式，会清除flag,并触发View.OnSystemUiVisibilityChangeListener()事件监听</td>
-</tr>
-<tr>
-<td>ImmersiveStickyMode</td>
-<td>SYSTEM_UI_FLAG_FULLSCREEN、SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN、SYSTEM_UI_FLAG_HIDE_NAVIGATION、SYSTEM_UI_FLAG_IMMERSIVE_STICKY</td>
-<td>点击屏幕不会退出全屏，从状态栏或者导航栏滑动到内容区域会暂时退出全屏模式（过一会儿如果没有操作又回进入全屏模式），并且状态栏和导航栏处于半透明的状态,不会清除flag,不会触发View.OnSystemUiVisibilityChangeListener()事件监听</td>
-</tr>
-</tbody>
-</table>
-<h4 id="2-设置透明状态栏"><a href="#2-设置透明状态栏" class="headerlink" title="2. 设置透明状态栏"></a>2. 设置透明状态栏</h4><p>Android 系统从4.4开始支持透明状态栏,效果在 4.4.x 和 5.x 上表现不同，4.4.x 是一层渐变的遮罩层；5.x 以上是一条半透明的遮罩层。</p>
-<ul>
-<li>通过theme 设置：</li>
-</ul>
-<p>values-19文件夹中的style：</p>
-<pre><code>&lt;style name=&quot;AppTheme.ExtendStatusBar&quot; parent=&quot;AppTheme&quot;&gt;
-     &lt;item name=&quot;android:windowTranslucentStatus&quot;&gt;true&lt;/item&gt;
-&lt;/style&gt;
-</code></pre><ul>
-<li><p>通过代码设置：</p>
-<p>   activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);</p>
-</li>
-</ul>
-<p>设置完毕后，还需要给layout 设置fitsSystemWindows属性为true，系统就会调整该view的padding值来留出空间给系统窗体。表现为，padding出status bar的高度给status bar使用，不至于我们定义layout跟status bar重叠！<br>这是因为fitsSystemWindows属性使得布局的paddingTop被重新改写了（paddingTop增加了状态栏的高度）。也可以通过代码来设置，需要在setContentView()方法 之后添加(代码来自<a href="https://www.jianshu.com/p/0acc12c29c1b" target="_blank" rel="external">这里</a>)</p>
-<pre><code>ViewGroup contentFrameLayout = (ViewGroup) findViewById(Window.ID_ANDROID_CONTENT);
-    View parentView = contentFrameLayout.getChildAt(0);
-    if (parentView != null &amp;&amp; Build.VERSION.SDK_INT &gt;= 14) {
-        parentView.setFitsSystemWindows(true);
-    }
-</code></pre><h4 id="3-设置状态栏背景颜色"><a href="#3-设置状态栏背景颜色" class="headerlink" title="3. 设置状态栏背景颜色"></a>3. 设置状态栏背景颜色</h4><p>Android 系统从5.0开始支持设置状态栏的背景颜色</p>
-<ul>
-<li>通过theme 设置：</li>
-</ul>
-<p>values-21文件夹中的style：</p>
-<pre><code>&lt;style name=&quot;AppTheme.Main&quot; parent=&quot;AppTheme&quot;&gt;
-    &lt;item name=&quot;android:windowTranslucentStatus&quot;&gt;true&lt;/item&gt;
-    &lt;item name=&quot;android:windowTranslucentNavigation&quot;&gt;true&lt;/item&gt;
-    &lt;item name=&quot;android:statusBarColor&quot;&gt;@android:color/holo_red_dark&lt;/item&gt;
-&lt;/style&gt;
-</code></pre><ul>
-<li><p>通过代码设置：</p>
-<pre><code>activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-  activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-  activity.getWindow().setStatusBarColor(calculateStatusColor(color, statusBarAlpha));
-</code></pre></li>
-</ul>
-<h4 id="4-设置状态栏字体颜色"><a href="#4-设置状态栏字体颜色" class="headerlink" title="4. 设置状态栏字体颜色"></a>4. 设置状态栏字体颜色</h4><p>Android 6.0API window添加了一个<a href="https://developer.android.com/reference/android/R.attr.html#windowLightStatusBar" target="_blank" rel="external">windowLightStatusBar</a>的属性，是为了解决当状态栏被设为和白色相近的浅色的话，状态栏上的系统图标文字就看不到了的问题。</p>
-<ul>
-<li>通过theme 设置：</li>
-</ul>
-<p>values-23文件夹中的style：</p>
-<pre><code>&lt;style name=&quot;AppTheme.Main&quot; parent=&quot;AppTheme&quot;&gt;
-    &lt;item name=&quot;android:windowLightStatusBar&quot;&gt;true&lt;/item&gt;
-&lt;/style&gt;
-</code></pre><ul>
-<li><p>通过代码设置：</p>
-<pre><code>if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.M) {
-    int uiOptions = activity.getWindow().getDecorView().getSystemUiVisibility();
-    uiOptions |=View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
-}
-</code></pre></li>
-</ul>
-<p>魅族Flyme和小米MIUI本身提供了修改状态栏的文字和图标颜色的方法，可以将状态栏的系统文字和图标颜色设置为深色。<br>魅族手机状态栏设置：<a href="http://open-wiki.flyme.cn/index.php?title=%E7%8A%B6%E6%80%81%E6%A0%8F%E5%8F%98%E8%89%B2" target="_blank" rel="external">官方文档</a><br>小米手机状态栏设置：<a href="https://dev.mi.com/console/doc/detail?pId=1159" target="_blank" rel="external">官方文档</a></p>
-<p>以上两个官方文档中都有设置代码，我汇总一下，最终代码如下：</p>
-<pre><code>/**
- * 设置动态变色的状态栏
- *
- * @param activity     当前activity
- * @param isLightColor 是否是淡色
- */
-public static void setLightStatusBar(@NonNull Activity activity, boolean isLightColor) {
-    if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.M) {
-        if (isLightColor) {
-            int uiOptions = activity.getWindow().getDecorView().getSystemUiVisibility();
-            uiOptions |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
-            activity.getWindow().getDecorView().setSystemUiVisibility(uiOptions);
-        } else {
-            int uiOptions = activity.getWindow().getDecorView().getSystemUiVisibility();
-            uiOptions &amp;= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
-            activity.getWindow().getDecorView().setSystemUiVisibility(uiOptions);
-        }
-    } else {
-        if (RomUtil.isMIUI()) {
-            setMIUIStatusBarDarkMode(activity, isLightColor);
-        } else if (RomUtil.isFlyme()) {
-            setFlymeStatusBarDarkMode(activity, isLightColor);
-        }
-    }
-}
+<h4 id="1-设置全屏"><a href="#1-设置全屏" class="headerlink" title="1.设置全屏"></a>1.设置全屏</h4><p>官方详细介绍：<a href="https://developer.android.com/design/patterns/fullscreen.html#immersive">Immersive</a><br>官方示例：<a href="https://github.com/googlesamples/android-AdvancedImmersiveMode">sample</a><br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2018/02/03/Android中透明状态栏全面解读/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
 
-/**
- * 在旧的MIUI版本(Android 6.0以下)设置状态栏字体颜色
- *
- * @param activity 当前activity
- * @param darkmode 是否为黑色字体图标
- */
-private static void setMIUIStatusBarDarkMode(@NonNull Activity activity, boolean darkmode) {
-    Class&lt;? extends Window&gt; clazz = activity.getWindow().getClass();
-    try {
-        int darkModeFlag = 0;
-        Class&lt;?&gt; layoutParams = Class.forName(&quot;android.view.MiuiWindowManager$LayoutParams&quot;);
-        Field field = layoutParams.getField(&quot;EXTRA_FLAG_STATUS_BAR_DARK_MODE&quot;);
-        darkModeFlag = field.getInt(layoutParams);
-        Method extraFlagField = clazz.getMethod(&quot;setExtraFlags&quot;, int.class, int.class);
-        extraFlagField.invoke(activity.getWindow(), darkmode ? darkModeFlag : 0, darkModeFlag);
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-}
+    <div>
+      
+    </div>
 
-/**
- * 在旧的Flyme版本(Android 6.0以下)设置状态栏字体颜色
- *
- * @param activity 当前activity
- * @param darkmode 是否为深色字体图标
- */
-private static void setFlymeStatusBarDarkMode(@NonNull Activity activity, boolean darkmode) {
+    <div>
+      
+    </div>
 
-    try {
-        ViewGroup.LayoutParams winParams = activity.getWindow().getAttributes();
-        Field f = winParams.getClass().getDeclaredField(&quot;MEIZU_FLAG_DARK_STATUS_BAR_ICON&quot;);
-        f.setAccessible(true);
-        int bits = f.getInt(winParams);
-        Field f2 = winParams.getClass().getDeclaredField(&quot;meizuFlags&quot;);
-        f2.setAccessible(true);
-        int meizuFlags = f2.getInt(winParams);
-        int oldFlags = meizuFlags;
-        if (darkmode) {
-            meizuFlags |= bits;
-        } else {
-            meizuFlags &amp;= ~bits;
-        }
-        if (oldFlags != meizuFlags) {
-            f2.setInt(winParams, meizuFlags);
-        }
-    } catch (NoSuchFieldException e) {
-        e.printStackTrace();
-    } catch (IllegalAccessException e) {
-        e.printStackTrace();
-    } catch (IllegalArgumentException e) {
-        e.printStackTrace();
-    } catch (Throwable e) {
-        e.printStackTrace();
-    }
-}
-</code></pre><h5 id="已知的手机适配问题"><a href="#已知的手机适配问题" class="headerlink" title="已知的手机适配问题"></a>已知的手机适配问题</h5><ul>
-<li>华为EMUI3.1（Android5.0／5.1 Lollipop） 状态栏设置无效。经过验证，无法按照5.0 API 设置，但是可以按照4.4 API设置，设置后的效果也r仍然是4.4API的效果。</li>
-</ul>
-<h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><ul>
-<li><a href="http://blog.csdn.net/mafei852213034/article/details/51769952" target="_blank" rel="external">http://blog.csdn.net/mafei852213034/article/details/51769952</a></li>
-<li><a href="http://blog.csdn.net/mafei852213034/article/details/51769952" target="_blank" rel="external">http://blog.csdn.net/mafei852213034/article/details/51769952</a></li>
-</ul>
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/14/关于BaseActivty和BaseFragment的封装/" itemprop="url">
+                  浅谈BaseActivity的封装
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-03-14T15:04:23+08:00" content="2017-03-14">
+              2017-03-14
+            </time>
+          </span>
 
           
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/03/14/关于BaseActivty和BaseFragment的封装/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/14/关于BaseActivty和BaseFragment的封装/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/03/14/关于BaseActivty和BaseFragment的封装/" class="leancloud_visitors" data-flag-title="浅谈BaseActivity的封装">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="浅谈BaseActivity的封装"><a href="#浅谈BaseActivity的封装" class="headerlink" title="浅谈BaseActivity的封装"></a>浅谈BaseActivity的封装</h2><p>在项目中，我们在使用Activity和fragment的时候一般会在基类里封装一些共有的逻辑，每个人可能都有不同封装思路，考虑的逻辑也会不同。这些共有的逻辑有很多,下面就来总结下我们通常会考虑的一些封装内容。</p>
+<ol>
+<li><strong>状态栏，底部导航栏设置</strong><br>系统从4.4开始支持透明状态栏,效果在不同版本上表现不同，实现方式主要有设置主题style 和在activity中手动设置需要对每个Activity进行适配。现在的App大多都对状态栏进行适配。这些都是一些相同的逻辑：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">    super.onCreate(savedInstanceState);</div><div class="line">    setStatusBar();</div><div class="line">    ...</div><div class="line">&#125;</div><div class="line"> protected void setStatusBar() &#123;</div><div class="line">   SystemBarUtil.setTranslucentStatusBar(this,true);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其中SystemBarUtil的封装参见我的 SystemBarUtil</p>
+<ol>
+<li><strong>共有的控件，如toolbar或者自定义的titleBar</strong>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2017/03/14/关于BaseActivty和BaseFragment的封装/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -878,8 +866,8 @@ private static void setFlymeStatusBarDarkMode(@NonNull Activity activity, boolea
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/others/" itemprop="url" rel="index">
-                    <span itemprop="name">others</span>
+                  <a href="/categories/Others/" itemprop="url" rel="index">
+                    <span itemprop="name">Others</span>
                   </a>
                 </span>
 
@@ -928,44 +916,17 @@ private static void setFlymeStatusBarDarkMode(@NonNull Activity activity, boolea
 
       
         
-          
-            <h5 id="Arc-代码审查规范流程"><a href="#Arc-代码审查规范流程" class="headerlink" title="Arc 代码审查规范流程"></a>Arc 代码审查规范流程</h5><p>我们认为CodeReview代码审查的直接作用就是规范代码习惯、找出潜在缺陷、BUG，优化代码设计，对产品质量进行把关。对于码农来说也是有好处的，可以促进工程师日常代码交流和帮助个人的成长。</p>
+          <h5 id="Arc-代码审查规范流程"><a href="#Arc-代码审查规范流程" class="headerlink" title="Arc 代码审查规范流程"></a>Arc 代码审查规范流程</h5><p>我们认为CodeReview代码审查的直接作用就是规范代码习惯、找出潜在缺陷、BUG，优化代码设计，对产品质量进行把关。对于码农来说也是有好处的，可以促进工程师日常代码交流和帮助个人的成长。</p>
 <p>最近公司选用Phabricator作为内部的的代码评审工具。配合Arcanist使用感觉还是挺不错的。其中Arcanist作为提交代码评审的工具。</p>
 <h5 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h5><ol>
 <li>从主干上面切换到此开发分支：git checkout   develop</li>
 <li>提交信息git commit -m “xxxMessage”</li>
-<li>提交与远端develop分支的差异revision：arc diff origin/develop</li>
-</ol>
-<blockquote>
-<p>Attention: 如果当前分支已经有未推送的revision,将会update revision,而不会产生新的revision，如果需要另加revision，可以使用：arc diff –create origin/develop</p>
-</blockquote>
-<ol>
-<li>推送到远端develop分支：arc land –onto develop </li>
-</ol>
-<blockquote>
-<p>Attention: 如果不指定分支，直接使用arc land ,将会自动合并到 origin master 并且删除当前本地develop分支，当然也可通过配置设置arc.land.onto.default来指定默认推送分支：arc set-config  arc.land.onto.default develop </p>
-</blockquote>
-<h5 id="Others"><a href="#Others" class="headerlink" title="Others"></a>Others</h5><ul>
-<li><p>配置arc的默认编辑器使用vi，可以直接命令行执行：</p>
-<p>  arc set-config editor “vim”<br>或者修改当前用户目录下的.arcrc文件：</p>
-</li>
-</ul>
-<pre><code>{
-  &quot;hosts&quot;: {
-    &quot;xxxx&quot;: {
-      &quot;token&quot;: &quot;xxxxx&quot;
-    }
-  },
- &quot;config&quot;: {
-    &quot;editor&quot;: &quot;vim&quot;,
-    &quot;arc.land.onto.default&quot;: &quot;develop&quot;
-  }
-} 
-</code></pre><h5 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h5><ul>
-<li><a href="https://secure.phabricator.com/book/phabricator/article/arcanist/" target="_blank" rel="external">Arcanist User Guide</a></li>
-</ul>
-
-          
+<li>提交与远端develop分支的差异revision：arc diff origin/develop
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2017/01/03/Arc 代码审查规范流程/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1582,7 +1543,7 @@ private static void setFlymeStatusBarDarkMode(@NonNull Activity activity, boolea
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-count">9</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1590,7 +1551,7 @@ private static void setFlymeStatusBarDarkMode(@NonNull Activity activity, boolea
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1599,7 +1560,7 @@ private static void setFlymeStatusBarDarkMode(@NonNull Activity activity, boolea
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

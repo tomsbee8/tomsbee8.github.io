@@ -90,7 +90,7 @@
 <meta property="og:url" content="https://tomsbee8.github.io/2018/03/03/记录一次第三方IM迁移流程/index.html">
 <meta property="og:site_name" content="TomsBee8's Blog">
 <meta property="og:description" content="最近公司出于某些考虑打算更换第三方 IM 服务，我们 app 集成的是环信IM,打算更换为云星的SDK，而且 app 的现有用户量很大。刚好我一直在维护更新 IM 这个模块，然后前段时间 有小伙伴研究了我们 app 的 IM 服务架构迁移技术上的可行性，认为可行。现在呢，正准备实施转移了，虽然讨论了很多方案，我感觉工作量还是相当的大，复杂度还是比较高的。我们端上来协调工作，诸如：制定迁移流程，制">
-<meta property="og:updated_time" content="2018-05-24T15:01:59.321Z">
+<meta property="og:updated_time" content="2018-05-26T13:28:28.548Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记录一次IM迁移流程">
 <meta name="twitter:description" content="最近公司出于某些考虑打算更换第三方 IM 服务，我们 app 集成的是环信IM,打算更换为云星的SDK，而且 app 的现有用户量很大。刚好我一直在维护更新 IM 这个模块，然后前段时间 有小伙伴研究了我们 app 的 IM 服务架构迁移技术上的可行性，认为可行。现在呢，正准备实施转移了，虽然讨论了很多方案，我感觉工作量还是相当的大，复杂度还是比较高的。我们端上来协调工作，诸如：制定迁移流程，制">
@@ -305,8 +305,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/others/" itemprop="url" rel="index">
-                    <span itemprop="name">others</span>
+                  <a href="/categories/Others/" itemprop="url" rel="index">
+                    <span itemprop="name">Others</span>
                   </a>
                 </span>
 
@@ -355,7 +355,7 @@
 
       
         <blockquote>
-<p>最近公司出于某些考虑打算更换第三方 IM 服务，我们 app 集成的是环信IM,打算更换为云星的SDK，而且 app 的现有用户量很大。刚好我一直在维护更新 IM 这个模块，然后前段时间 有小伙伴研究了我们 app 的 IM 服务架构迁移技术上的可行性，认为可行。现在呢，正准备实施转移了，虽然讨论了很多方案，我感觉工作量还是相当的大，复杂度还是比较高的。我们端上来协调工作，诸如：制定迁移流程，制定迁移消息协议等。我参与讨论很久，我对于IM的了解还算相对多一些。个人梳理的基本流程是：IM server 里拆解再组装用户和群组数据、App 端上复制本地消息数据、端上强制升级。</p>
+<p>最近公司出于某些考虑打算更换第三方 IM 服务，我们 app 集成的是环信IM,打算更换为云星的SDK，而且 app 的现有用户量很大。刚好我一直在维护更新 IM 这个模块，然后前段时间 有小伙伴研究了我们 app 的 IM 服务架构迁移技术上的可行性，认为可行。现在呢，正准备实施转移了，虽然讨论了很多方案，我感觉工作量还是相当的大，复杂度还是比较高的。我们端上来协调工作，诸如：制定迁移流程，制定迁移消息协议等。我参与讨论很久，我对于IM的了解还算相对多一些。个人梳理的基本流程是：IM server 里拆解再组装用户和群组数据、App 端上复制本地消息数据、端上强制升级。<br>    <a id="more"></a> </p>
 </blockquote>
 <h3 id="版本流程"><a href="#版本流程" class="headerlink" title="版本流程"></a>版本流程</h3><table>
 <thead>
@@ -368,7 +368,7 @@
 <tbody>
 <tr>
 <td>环信「使用」<br></td>
-<td>环信[不使用] 网易云信[使用]</td>
+<td>环信[不使用] <br> 网易云信[使用]</td>
 <td><br>网易云信[使用]</td>
 </tr>
 </tbody>
@@ -492,6 +492,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2018/05/13/初识Flutter/" rel="prev" title="初识Flutter">
+                初识Flutter <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -584,7 +588,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-count">9</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -592,7 +596,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -601,7 +605,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
